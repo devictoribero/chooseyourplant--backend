@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PlantFinderById } from "../../contexts/Plants/Application/Find/PlantFinderById";
-import { FindByIdPlantRequest } from "../../contexts/Plants/Application/Find/FindByIdPlantRequest";
+import { FindPlantByIdRequest } from "../../contexts/Plants/Application/Find/FindPlantByIdRequest";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
@@ -14,7 +14,7 @@ export class PlantsGetByIdController implements Controller {
   async run(req: Request, res: Response) {
     const id: string = req.params.id;
 
-    const createPlantRequest = new FindByIdPlantRequest(id);
+    const createPlantRequest = new FindPlantByIdRequest(id);
 
     await this.plantFinderById
       .run(createPlantRequest)

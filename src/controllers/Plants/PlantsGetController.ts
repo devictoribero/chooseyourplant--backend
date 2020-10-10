@@ -1,26 +1,25 @@
 import { Request, Response } from "express";
-import { PlantFinderById } from "../../contexts/Plants/Application/Find/PlantFinderById";
-import { FindByIdPlantRequest } from "../../contexts/Plants/Application/Find/FindByIdPlantRequest";
+import { PlantFinder } from "../../contexts/Plants/Application/Find/PlantsFinder";
+import { FindPlantsRequest } from "../../contexts/Plants/Application/Find/FindPlantsRequest";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
 export class PlantsGetController implements Controller {
-  plantFinderById: PlantFinderById;
+  plantFinder: PlantFinder;
 
-  constructor(plantFinderById: PlantFinderById) {
-    this.plantFinderById = plantFinderById;
+  constructor(plantFinder: PlantFinder) {
+    this.plantFinder = plantFinder;
   }
 
   async run(req: Request, res: Response) {
-    const id: string = req.params.id;
+    const limit = req.params.limit || 20;
+    const createPlantRequest = new FindPlantsRequest(limit);
 
-    const createPlantRequest = new FindByIdPlantRequest(id);
-
-    await this.plantFinderById
+    await this.plantFinder
       .run(createPlantRequest)
-      .then((plant) =>
-        plant
-          ? res.status(httpStatus.FOUND).send(plant)
+      .then((plants) =>
+        plants
+          ? res.status(httpStatus.FOUND).send(plants)
           : res.status(httpStatus.NOT_FOUND).send()
       )
       .catch((error: any) =>
