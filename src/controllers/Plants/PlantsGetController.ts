@@ -13,16 +13,11 @@ export class PlantsGetController implements Controller {
 
   async run(req: Request, res: Response) {
     const count: number = parseInt(req.params.count) || 10;
-
     const findPlantsRequest = new FindPlantsRequest(count);
 
     await this.plantsFinder
       .run(findPlantsRequest)
-      .then((plants) =>
-        plants
-          ? res.status(httpStatus.FOUND).send(plants)
-          : res.status(httpStatus.NOT_FOUND).send()
-      )
+      .then((plants) => res.status(httpStatus.OK).send(plants))
       .catch((error: any) =>
         res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error)
       );

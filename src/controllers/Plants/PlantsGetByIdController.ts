@@ -20,7 +20,7 @@ export class PlantGetByIdController implements Controller {
       .run(createPlantRequest)
       .then((plant) =>
         plant
-          ? res.status(httpStatus.FOUND).send(plant)
+          ? res.status(httpStatus.OK).send(plant)
           : res.status(httpStatus.NOT_FOUND).send()
       )
       .catch((error: any) =>

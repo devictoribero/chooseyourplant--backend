@@ -4,6 +4,7 @@ import MongoPlantModel from "./MongoPlantModel";
 import { Nullable } from "../../Shared/Domain/Nullable";
 import { PlantAlreadyExists } from "../Domain/PlantAlreadyExists";
 import { GeneralError } from "../../Shared/Domain/GeneralError";
+
 export class MongoPlantRepository implements PlantRepository {
   async save(plant: Plant): Promise<void> {
     await MongoPlantModel.init()
@@ -27,7 +28,7 @@ export class MongoPlantRepository implements PlantRepository {
     );
 
     // @ts-ignore
-    return doc ? new Plant(id, doc.nickname, doc.name) : null;
+    return doc ? new Plant(doc.id || id, doc.nickname, doc.name) : null;
   }
 
   async find(count: number = 10): Promise<Nullable<Array<Plant>>> {
@@ -35,9 +36,9 @@ export class MongoPlantRepository implements PlantRepository {
       MongoPlantModel.find().limit(count)
     );
 
-    console.log(docs);
-
-    // @ts-ignore
-    return null;
+    return docs
+      ? // @ts-ignore
+        docs.map((doc) => new Plant(doc.id, doc.nickname, doc.name))
+      : null;
   }
 }

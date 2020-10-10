@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import PlantsGetRoute from "./routes/PlantsGet";
 import PlantGetRoute from "./routes/PlantGet";
 import PlantPostRoute from "./routes/PlantPost";
 
@@ -22,6 +23,7 @@ export class Application {
   }
 
   initRoutes() {
+    this.app.use(PlantsGetRoute);
     this.app.use(PlantGetRoute);
     this.app.use(PlantPostRoute);
   }
