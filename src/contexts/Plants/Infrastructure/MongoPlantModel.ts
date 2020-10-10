@@ -1,11 +1,11 @@
 import { Schema, model } from "mongoose";
 
-// Mongoose auto generates a `_id` field for all instances.
-// I'm generating the `uuid` in the fronntend and saving them
-// on the `id` field
+// Mongoose auto generates an `_id` field for all instances.
+// I wanted to overwrite it, but looks it doesn't work
+// So I created another field called `id`.
 export const plantSchema = new Schema({
-  id: { type: String, required: true },
-  nickname: { type: String, required: true, unique: true },
+  id: { type: String, required: true, unique: true },
+  nickname: { type: String, required: true },
   name: { type: String, required: false },
 });
 

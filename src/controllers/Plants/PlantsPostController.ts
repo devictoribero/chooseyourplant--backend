@@ -21,8 +21,8 @@ export class PlantPostController implements Controller {
       .run(createPlantRequest)
       .then(() => res.status(httpStatus.CREATED).send({ id }))
       .catch((error: any) => {
-        console.error(error);
-        res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error);
+        res.status(httpStatus.INTERNAL_SERVER_ERROR);
+        error.message ? res.send(error.message) : res.send(error);
       });
   }
 }

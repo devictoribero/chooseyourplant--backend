@@ -1,7 +1,7 @@
-export class FindPlantByIdRequest {
-  limit: number;
+export class FindPlantsRequest {
+  count: number;
 
-  constructor(limit: number) {
-    this.limit = limit;
+  constructor(count: number) {
+    this.count = count;
   }
 }
