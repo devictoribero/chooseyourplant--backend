@@ -1,6 +1,7 @@
 import express from "express";
-import getPlantsController from "./PlantTracker/controllers/GetPlants";
-import createPlantController from "./PlantTracker/controllers/CreatePlant";
+import bodyParser from "body-parser";
+import PlantGetRoute from "./routes/PlantGet";
+import PlantPostRoute from "./routes/PlantPost";
 
 export class Application {
   app: express.Application;
@@ -9,12 +10,20 @@ export class Application {
   constructor(port = 8000) {
     this.app = express();
     this.port = port;
+    this.useMiddlewares();
     this.initRoutes();
   }
 
+  useMiddlewares() {
+    // parse application/x-www-form-urlencoded
+    this.app.use(bodyParser.urlencoded({ extended: true }));
+    // parse application/json
+    this.app.use(bodyParser.json());
+  }
+
   initRoutes() {
-    this.app.use(getPlantsController);
-    this.app.use(createPlantController);
+    this.app.use(PlantGetRoute);
+    this.app.use(PlantPostRoute);
   }
 
   start() {
