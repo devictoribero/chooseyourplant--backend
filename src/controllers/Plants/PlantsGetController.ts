@@ -4,7 +4,7 @@ import { FindByIdPlantRequest } from "../../contexts/Plants/Application/Find/Fin
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
-export class PlantsGetByIdController implements Controller {
+export class PlantsGetController implements Controller {
   plantFinderById: PlantFinderById;
 
   constructor(plantFinderById: PlantFinderById) {
