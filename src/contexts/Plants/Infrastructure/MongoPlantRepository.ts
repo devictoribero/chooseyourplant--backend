@@ -10,14 +10,14 @@ export class MongoPlantRepository implements PlantRepository {
     await MongoPlantModel.init()
       .then(() =>
         MongoPlantModel.create({
-          id: plant.id,
-          nickname: plant.nickname,
-          name: plant.name,
+          id: plant.getId(),
+          nickname: plant.getNickname(),
+          name: plant.getCommonName(),
         })
       )
       .catch((error) => {
         if (error.codeName === "DuplicateKey")
-          throw new PlantAlreadyExists(plant.id);
+          throw new PlantAlreadyExists(plant.getId());
         throw new GeneralError("Tried to create a plant");
       });
   }

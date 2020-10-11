@@ -4,11 +4,11 @@ describe("Plant", () => {
   it("should return a new plant instance", () => {
     const id = "afsacgsfg";
     const nickname = "My princess";
-    const name = "ZZ plannt";
-    const plant = new Plant(id, nickname, name);
+    const commonName = "ZZ plant";
+    const plant = new Plant(id, nickname, commonName);
 
-    expect(plant.id).toEqual(id);
-    expect(plant.nickname).toEqual(nickname);
-    expect(plant.name).toEqual(name);
+    expect(plant.getId()).toEqual(id);
+    expect(plant.getNickname()).toEqual(nickname);
+    expect(plant.getCommonName()).toEqual(commonName);
   });
 });
