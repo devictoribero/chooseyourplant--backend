@@ -4,6 +4,7 @@ import { FindPlantsRequest } from "../../contexts/Plants/Application/Find/FindPl
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
+const MAX_NUMBER_PLANTS = 30;
 export class PlantsGetController implements Controller {
   plantsFinder: PlantsFinder;
 
@@ -13,7 +14,7 @@ export class PlantsGetController implements Controller {
 
   async run(req: Request, res: Response) {
     const { query } = req;
-    const count: number = query.count ? +query.count : 10;
+    const count: number = query.count ? +query.count : MAX_NUMBER_PLANTS;
     const findPlantsRequest = new FindPlantsRequest(count);
 
     await this.plantsFinder
