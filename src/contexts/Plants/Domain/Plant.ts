@@ -1,4 +1,6 @@
 import { WaterMaintenance } from "./WaterMaintenance";
+import { FertilizationMaintenance } from "./FertilizationMaintenance";
+import dayjs from "dayjs";
 
 export class Plant {
   private id: string;
@@ -6,7 +8,8 @@ export class Plant {
   private commonName?: string;
   private latinName?: string;
   private imageUrl?: string;
-  private waterMaintenance?: WaterMaintenance;
+  private waterMaintenance: WaterMaintenance | null;
+  private fertilizationMaintenance: FertilizationMaintenance | null;
 
   constructor(
     id: string,
@@ -14,14 +17,16 @@ export class Plant {
     commonName?: string,
     latinName?: string,
     imageUrl?: string,
-    waterMaintenance?: WaterMaintenance
+    waterMaintenance?: WaterMaintenance | null,
+    fertilizationMaintenance?: FertilizationMaintenance | null
   ) {
     this.id = id;
     this.nickname = nickname;
     this.commonName = commonName;
     this.latinName = latinName;
     this.imageUrl = imageUrl;
-    this.waterMaintenance = waterMaintenance;
+    this.waterMaintenance = waterMaintenance || null;
+    this.fertilizationMaintenance = fertilizationMaintenance || null;
   }
 
   public getId(): string {
@@ -44,16 +49,33 @@ export class Plant {
     return this.imageUrl;
   }
 
-  public getWaterMaintenance(): WaterMaintenance | undefined {
-    return this.waterMaintenance;
+  markAsWatered(): void {
+    // update the last time the plant has been watered to now
+    const now = new Date();
+    this.waterMaintenance?.updateLastWateringDate(now);
+
+    // calculate next watering time from now
+    this.waterMaintenance?.updateNextWateringDate(
+      this.incrementDays(now, this.waterMaintenance.getFrequencyInDays())
+    );
   }
 
-  water(): void {
-    // this.waterMaintenance
-    // update the last waterMaintenance date to now
-    // this.lastWateringDate = Date.now()
-    //
-    // Update the next waterMaintenance date X days
-    // this.nextWateringDate = new Date() + 5 days
+  markAsFertilized(): void {
+    // update the last time the plant has been fertilized to now
+    const now = new Date();
+    this.fertilizationMaintenance?.updateLastFertilizationDate(now);
+
+    // calculate next fertilization time from now
+    this.fertilizationMaintenance?.updateNextFertilizationDate(
+      this.incrementDays(
+        now,
+        this.fertilizationMaintenance.getFrequencyInDays()
+      )
+    );
+  }
+
+  incrementDays(date: Date, days: number): Date {
+    const dateIncremented = dayjs(date).add(days, "day").format();
+    return new Date(dateIncremented);
   }
 }

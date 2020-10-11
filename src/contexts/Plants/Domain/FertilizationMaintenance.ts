@@ -48,6 +48,10 @@ export class FertilizationMaintenance {
     this.nextFertilizationDate = date;
   }
 
+  updateLastFertilizationDate(date: Date): void {
+    this.lastFertilizationDate = date;
+  }
+
   updateFrequency(frequencyInDays: FERTILIZATION_FREQUENCY): void {
     this.frequencyInDays = frequencyInDays;
   }

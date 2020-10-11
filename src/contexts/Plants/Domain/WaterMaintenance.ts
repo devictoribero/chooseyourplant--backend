@@ -36,6 +36,14 @@ export class WaterMaintenance {
     return this.lastWateringDate;
   }
 
+  updateNextWateringDate(date: Date): void {
+    this.nextWateringDate = date;
+  }
+
+  updateLastWateringDate(date: Date): void {
+    this.lastWateringDate = date;
+  }
+
   incrementDays(date: Date, days: number): Date {
     const dateIncremented = dayjs(date).add(days, "day").format();
     return new Date(dateIncremented);
