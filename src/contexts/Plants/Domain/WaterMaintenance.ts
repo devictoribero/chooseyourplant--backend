@@ -3,30 +3,37 @@ import dayjs from "dayjs";
 export class WaterMaintenance {
   private frequencyInDays: number;
   private nextWateringDate: Date;
-  private lastWateringDate?: Date;
+  private lastWateringDate: Date | null;
 
   constructor(
     frequencyInDays: number,
-    lastWateringDate?: Date,
-    nextWateringDate?: Date
+    nextWateringDate: Date | null = null,
+    lastWateringDate: Date | null = null
   ) {
     this.frequencyInDays = frequencyInDays;
-
-    if (nextWateringDate) {
-      this.nextWateringDate = nextWateringDate;
-    }
+    this.lastWateringDate = lastWateringDate;
 
     if (lastWateringDate) {
       this.lastWateringDate = lastWateringDate;
+      this.nextWateringDate = nextWateringDate
+        ? nextWateringDate
+        : this.incrementDays(lastWateringDate, frequencyInDays);
+    } else {
+      this.lastWateringDate = null;
+      this.nextWateringDate = this.incrementDays(new Date(), frequencyInDays);
     }
-    // If the last time a plant was watered is specified
-    // but the next time is not, we calculate it
-    if (lastWateringDate && !nextWateringDate) {
-      this.nextWateringDate = this.incrementDays(
-        lastWateringDate,
-        frequencyInDays
-      );
-    }
+  }
+
+  public getFrequencyInDays(): number {
+    return this.frequencyInDays;
+  }
+
+  public getNextWateringDate(): Date {
+    return this.nextWateringDate;
+  }
+
+  public getLastWateringDate(): Date | null {
+    return this.lastWateringDate;
   }
 
   incrementDays(date: Date, days: number): Date {
