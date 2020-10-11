@@ -4,7 +4,7 @@ import { Schema, model } from "mongoose";
 // I wanted to overwrite it, but looks it doesn't work
 // So I created another field called `id`.
 export const plantSchema = new Schema({
-  id: { type: String, required: true },
+  id: { type: String, required: true, unique: true },
   nickname: { type: String, required: true },
   name: { type: String, required: false },
 });

@@ -21,7 +21,11 @@ export class Database {
     console.log(this.url);
     return mongoose
       .connect(this.url)
-      .then(() => console.log("⚡️[database]: has connected successfully"))
+      .then(() =>
+        console.log(
+          `⚡️[database]: has connected successfully to ${this.generateUrl()}`
+        )
+      )
       .catch(console.error);
   }
 }
