@@ -5,6 +5,8 @@ import { Nullable } from "../../../Shared/Domain/Nullable";
 import { PlantAlreadyExists } from "../Domain/PlantAlreadyExists";
 import { GeneralError } from "../../../Shared/Domain/GeneralError";
 
+const ID_ALREADY_EXISTING_EXCEPTION = 11000
+
 export class MongoPlantRepository implements PlantRepository {
   async save(plant: Plant): Promise<void> {
     await MongoPlantModel.init()
@@ -15,8 +17,9 @@ export class MongoPlantRepository implements PlantRepository {
         })
       )
       .catch((error) => {
-        if (error.codeName === "DuplicateKey")
+        if (error.code === ID_ALREADY_EXISTING_EXCEPTION) {
           throw new PlantAlreadyExists(plant.getId());
+        }
         throw new GeneralError("Tried to create a plant");
       });
   }

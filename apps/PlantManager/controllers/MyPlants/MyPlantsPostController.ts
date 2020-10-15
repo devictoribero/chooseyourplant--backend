@@ -10,21 +10,6 @@ export class MyPlantsPostController implements Controller {
     this.plantCreator = plantCreator;
   }
 
-  /*
-   * @req.body
-   * @req.body.id (string) | required
-   * @req.body.nickname (string) | required
-   * @req.body.maintenance (object) | required
-   * @req.body.maintenance.watering (object) | required
-   * @req.body.maintenance.watering.frequencyInDays (number) | required
-   * @req.body.maintenance.watering.nextWateringDate (number) | required
-   * @req.body.maintenance.watering.lastWateringDate (number) | required
-   * @req.body.maintenance.fertilization (object) | optional
-   * @req.body.maintenance.fertilization.frequencyInDays (number) | required
-   * @req.body.maintenance.fertilization.nextFertilizationDate (number) | required
-   * @req.body.maintenance.fertilization.lastFertilizationDate (number) | required
-   * @req.body.imageUrl (string) | required
-   */
   async run(req: Request, res: Response) {
     const id: string = req.body.id;
     const nickname: string = req.body.nickname;
@@ -34,8 +19,8 @@ export class MyPlantsPostController implements Controller {
     const fertilizationMaitenance: any | null = fertilization
       ? {
           frequencyInDays: fertilization.frequencyInDays,
-          nextFertilizationDate: fertilization.nextFertilizationDate,
-          lastFertilizationDate: fertilization.lastFertilizationDate,
+          nextFertilizationDate: fertilization.nextFertilizationDate ? new Date(fertilization.nextFertilizationDate) : null,
+          lastFertilizationDate: fertilization.lastFertilizationDate ? new Date(fertilization.lastFertilizationDate) : null,
         }
       : null;
 
@@ -46,8 +31,8 @@ export class MyPlantsPostController implements Controller {
         maintenance: {
           watering: {
             frequencyInDays: watering.frequencyInDays,
-            nextWateringDate: watering.nextWateringDate,
-            lastWateringDate: watering.lastWateringDate,
+            nextWateringDate: watering.nextWateringDate ? new Date(watering.nextWateringDate) : null,
+            lastWateringDate: watering.lastWateringDate ? new Date(watering.lastWateringDate) : null,
           },
           fertilization: fertilizationMaitenance,
         },
@@ -55,9 +40,8 @@ export class MyPlantsPostController implements Controller {
       })
       .then(() => res.status(httpStatus.CREATED).send())
       .catch((error: any) => {
-        console.log("asdasd");
-        res.status(httpStatus.INTERNAL_SERVER_ERROR);
-        error.message ? res.send(error.message) : res.send(error);
+        res.status(httpStatus.INTERNAL_SERVER_ERROR)
+        error.message ? res.send({error: error.message}) : res.send({error});
       });
   }
 }

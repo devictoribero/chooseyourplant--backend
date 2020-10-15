@@ -1,5 +1,3 @@
-import { Maintenance } from "../../../Maintenance/Domain/Maintenance";
-
 export type CreatePlantRequest = {
   id: string;
   nickname: string;
@@ -10,12 +8,12 @@ export type CreatePlantRequest = {
 export type MaintenanceType = {
   watering: {
     frequencyInDays: number;
-    nextWateringDate: Date;
-    lastWateringDate: Date | null;
+    nextWateringDate?: Date| null;
+    lastWateringDate?: Date | null;
   };
   fertilization?: {
     frequencyInDays: number;
-    nextFertilizationDate: Date;
-    lastFertilizationDate: Date | null;
+    nextFertilizationDate?: Date| null;
+    lastFertilizationDate?: Date | null;
   } | null;
 };

@@ -18,7 +18,6 @@ export class Database {
   }
 
   async connect(): Promise<void> {
-    console.log(this.url);
     return mongoose
       .connect(this.url)
       .then(() =>
