@@ -1,8 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
-import PlantsGetRoute from "./routes/PlantsGet";
-import PlantGetRoute from "./routes/PlantGet";
-import PlantPostRoute from "./routes/PlantPost";
+import MyPlantsGetRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGet";
+import MyPlantsGetByIdRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGetById";
+import MyPlantsPostRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsPost";
 
 export class Application {
   app: express.Application;
@@ -23,9 +23,9 @@ export class Application {
   }
 
   initRoutes() {
-    this.app.use(PlantsGetRoute);
-    this.app.use(PlantGetRoute);
-    this.app.use(PlantPostRoute);
+    this.app.use(MyPlantsGetRoute);
+    this.app.use(MyPlantsGetByIdRoute);
+    this.app.use(MyPlantsPostRoute);
   }
 
   start() {
