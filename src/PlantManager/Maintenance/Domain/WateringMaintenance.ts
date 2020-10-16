@@ -12,7 +12,7 @@ export class WateringMaintenance {
   ) {
     this.frequencyInDays = frequencyInDays;
     this.lastWateringDate = lastWateringDate;
-
+    
     if (lastWateringDate) {
       this.lastWateringDate = lastWateringDate;
       this.nextWateringDate = nextWateringDate ||
