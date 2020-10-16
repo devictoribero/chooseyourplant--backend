@@ -9,7 +9,6 @@ const ID_ALREADY_EXISTING_EXCEPTION = 11000
 
 export class MongoPlantRepository implements PlantRepository {
   async save(plant: Plant): Promise<void> {
-    console.log(plant)
     await MongoPlantModel.init()
       .then(() =>
         MongoPlantModel.create({
