@@ -39,11 +39,10 @@ export class MongoPlantRepository implements PlantRepository {
       .init()
       .then(() => MongoPlantModel.find().limit(count))
       .then(docs => docs ? docs.map(this.fromDocToEntity) : null)
-  }
-
-
-  private convertToNullableDate(stringDate: string): Date | null {
-    return stringDate ? new Date(stringDate) : null
+      .catch(err => {
+        console.error(err)
+        throw new Error(err)
+      })
   }
 
   /*
@@ -51,19 +50,16 @@ export class MongoPlantRepository implements PlantRepository {
    */
   private fromDocToEntity(doc: any) : Plant {
     const {watering, fertilization} = doc.maintenance
-    console.log(watering.frequencyInDays)
-    console.log(watering.lastWateringDate)
-    console.log(watering.nextWateringDate)
     const wateringMaintenance = new WateringMaintenance(
       watering.frequencyInDays,
-      this.convertToNullableDate(watering.lastWateringDate),
-      this.convertToNullableDate(watering.nextWateringDate),
-      )
+      convertToNullableDate(watering.lastWateringDate),
+      convertToNullableDate(watering.nextWateringDate),
+    )
     const fertilizationMaintenance = fertilization
       ? new FertilizationMaintenance(
         fertilization.frequencyInDays,
-        this.convertToNullableDate(fertilization.lastFertilizationDate),
-        this.convertToNullableDate(fertilization.nextFertilizationDate),
+        convertToNullableDate(fertilization.lastFertilizationDate),
+        convertToNullableDate(fertilization.nextFertilizationDate),
       )
       : null
     
@@ -86,4 +82,9 @@ export class MongoPlantRepository implements PlantRepository {
       imageUrl: plant.getImageUrl()
     }
   }
+}
+
+
+function convertToNullableDate(stringDate: string): Date | null {
+  return stringDate ? new Date(stringDate) : null
 }
