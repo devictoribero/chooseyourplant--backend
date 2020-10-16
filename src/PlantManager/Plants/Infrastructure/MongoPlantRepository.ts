@@ -4,6 +4,11 @@ import MongoPlantModel from "./MongoPlantModel";
 import { Nullable } from "../../../Shared/Domain/Nullable";
 import { PlantAlreadyExists } from "../Domain/PlantAlreadyExists";
 import { GeneralError } from "../../../Shared/Domain/GeneralError";
+import { PlantId } from "../Domain/PlantId";
+import { PlantNickname } from "../Domain/PlantNickname";
+import { Maintenance } from "../../Maintenance/Domain/Maintenance";
+import { WateringMaintenance } from "../../Maintenance/Domain/WateringMaintenance";
+import { FertilizationMaintenance } from "../../Maintenance/Domain/FertilizationMaintenance";
 
 const ID_ALREADY_EXISTING_EXCEPTION = 11000
 
@@ -11,12 +16,7 @@ export class MongoPlantRepository implements PlantRepository {
   async save(plant: Plant): Promise<void> {
     await MongoPlantModel.init()
       .then(() =>
-        MongoPlantModel.create({
-          id: plant.getId(),
-          nickname: plant.getNickname(),
-          maintenance: plant.getMaintenance(),
-          imageUrl: plant.getImageUrl()
-        })
+        MongoPlantModel.create(this.fromEntityToDoc(plant))
       )
       .catch((error) => {
         console.log(error)
@@ -41,9 +41,39 @@ export class MongoPlantRepository implements PlantRepository {
       MongoPlantModel.find().limit(count)
     );
 
-    return docs
-      ? // @ts-ignore
-        docs.map((doc) => new Plant(doc.id, doc.nickname, doc.name))
-      : null;
+    if (!docs) return null
+
+    return docs.map(this.fromDocToEntity)
+  }
+
+  private fromDocToEntity(doc: any) : Plant {
+    const wateringMaintenance = new WateringMaintenance(
+      doc.watering.frequencyInDays,
+      doc.watering.lastWateringDate || null,
+      doc.watering.nextWateringDate || null,
+    )
+    const fertilizationMaintenance = doc.fertilization
+      ? new FertilizationMaintenance(
+        doc.fertilization.frequencyInDays,
+        doc.fertilization.lastFertilizationDate || null,
+        doc.fertilization.nextFertilizationDate || null,
+      )
+      : null
+
+    return new Plant(
+      new PlantId(doc.id),
+      new PlantNickname(doc.nickname),
+      new Maintenance(wateringMaintenance, fertilizationMaintenance),
+      doc.imageUrl
+    )
+  }
+
+  private fromEntityToDoc(plant: Plant): Object {
+    return {
+      id: plant.getId(),
+      nickname: plant.getNickname(),
+      maintenance: plant.getMaintenance(),
+      imageUrl: plant.getImageUrl()
+    }
   }
 }
