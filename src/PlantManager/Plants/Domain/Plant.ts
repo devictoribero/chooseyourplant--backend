@@ -28,6 +28,14 @@ export class Plant {
     return this.nickname.toString();
   }
 
+  public getImageUrl(): string | null {
+    return this.imageUrl
+  }
+
+  public getMaintenance() : Maintenance {
+    return this.maintenance
+  }
+
   public markAsWatered(): void {
     this.maintenance.markAsWatered();
   }
@@ -35,4 +43,5 @@ export class Plant {
   public markAsFertilized(): void {
     this.maintenance.markAsFertilized();
   }
+
 }

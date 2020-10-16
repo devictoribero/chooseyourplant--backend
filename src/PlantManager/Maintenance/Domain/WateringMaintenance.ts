@@ -2,25 +2,25 @@ import dayjs from "dayjs";
 
 export class WateringMaintenance {
   private frequencyInDays: number;
-  private nextWateringDate: Date;
   private lastWateringDate: Date | null;
+  private nextWateringDate: Date;
 
   constructor(
     frequencyInDays: number,
+    lastWateringDate: Date | null = null,
     nextWateringDate: Date | null = null,
-    lastWateringDate: Date | null = null
   ) {
     this.frequencyInDays = frequencyInDays;
     this.lastWateringDate = lastWateringDate;
 
     if (lastWateringDate) {
       this.lastWateringDate = lastWateringDate;
-      this.nextWateringDate = nextWateringDate
-        ? nextWateringDate
-        : this.incrementDays(lastWateringDate, frequencyInDays);
+      this.nextWateringDate = nextWateringDate ||
+        this.incrementDays(lastWateringDate, frequencyInDays);
     } else {
       this.lastWateringDate = null;
-      this.nextWateringDate = this.incrementDays(new Date(), frequencyInDays);
+      this.nextWateringDate =  nextWateringDate ||
+        this.incrementDays(new Date(), frequencyInDays);
     }
   }
 

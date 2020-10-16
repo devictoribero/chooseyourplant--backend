@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc --project ./",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "keywords": [],
   "author": "Aman Mittal (https://amanhimself.dev)",

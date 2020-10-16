@@ -14,27 +14,24 @@ export type FertilizationMaintenanceType = {
 
 export class FertilizationMaintenance {
   private frequencyInDays: FERTILIZATION_FREQUENCY;
-  private nextFertilizationDate: Date;
   private lastFertilizationDate: Date | null;
+  private nextFertilizationDate: Date;
 
   constructor(
     frequencyInDays: FERTILIZATION_FREQUENCY,
+    lastFertilizationDate: Date | null = null,
     nextFertilizationDate: Date | null = null,
-    lastFertilizationDate: Date | null = null
   ) {
     this.frequencyInDays = frequencyInDays;
 
     if (lastFertilizationDate) {
       this.lastFertilizationDate = lastFertilizationDate;
-      this.nextFertilizationDate = nextFertilizationDate
-        ? nextFertilizationDate
-        : this.incrementDays(lastFertilizationDate, frequencyInDays);
+      this.nextFertilizationDate = nextFertilizationDate ||
+        this.incrementDays(lastFertilizationDate, frequencyInDays);
     } else {
       this.lastFertilizationDate = null;
-      this.nextFertilizationDate = this.incrementDays(
-        new Date(),
-        frequencyInDays
-      );
+      this.nextFertilizationDate = nextFertilizationDate ||
+        this.incrementDays(new Date(), frequencyInDays)
     }
   }
 

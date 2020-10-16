@@ -3,22 +3,23 @@ import { WateringMaintenance } from "./WateringMaintenance";
 import { FertilizationMaintenance } from "./FertilizationMaintenance";
 
 export class Maintenance {
-  private id: string;
   private watering: WateringMaintenance;
   private fertilization: FertilizationMaintenance | null;
 
   constructor(
-    id: string,
     watering: WateringMaintenance,
     fertilization?: FertilizationMaintenance | null
   ) {
-    this.id = id;
     this.watering = watering;
     this.fertilization = fertilization || null;
   }
 
-  public getId(): string {
-    return this.id;
+  public getWateringMaintenance(): WateringMaintenance {
+    return this.watering
+  }
+
+  public getFertilizationMaintenance(): FertilizationMaintenance | null {
+    return this.fertilization
   }
 
   public markAsWatered(): void {

@@ -25,7 +25,6 @@ export class PlantCreator {
       new PlantId(request.id),
       new PlantNickname(request.nickname),
       new Maintenance(
-        Uuid.generate().toString(),
         new WateringMaintenance(
           watering.frequencyInDays,
           watering.nextWateringDate,
