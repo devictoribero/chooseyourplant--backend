@@ -31,6 +31,7 @@ export class MongoPlantRepository implements PlantRepository {
       .init()
       .then(() => MongoPlantModel.findOne({ id }))
       .then(doc => doc ? this.fromDocToEntity(doc) : null)
+      .catch(err => { throw new Error(err) })
   }
 
   
@@ -39,10 +40,14 @@ export class MongoPlantRepository implements PlantRepository {
       .init()
       .then(() => MongoPlantModel.find().limit(count))
       .then(docs => docs ? docs.map(this.fromDocToEntity) : null)
-      .catch(err => {
-        console.error(err)
-        throw new Error(err)
-      })
+      .catch(err => { throw new Error(err) })
+  }
+
+  async remove(id: string): Promise<void> {
+    return MongoPlantModel
+      .init()
+      .then(async() => { await MongoPlantModel.findOneAndRemove({id}) })
+      .catch(err => { throw new Error(err) })
   }
 
   /*

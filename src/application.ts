@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import MyPlantsGetRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGet";
 import MyPlantsGetByIdRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGetById";
 import MyPlantsPostRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsPost";
+import MyPlantsDeleteRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsDelete";
 
 export class Application {
   app: express.Application;
@@ -26,6 +27,7 @@ export class Application {
     this.app.use(MyPlantsGetRoute);
     this.app.use(MyPlantsGetByIdRoute);
     this.app.use(MyPlantsPostRoute);
+    this.app.use(MyPlantsDeleteRoute);
   }
 
   start() {
