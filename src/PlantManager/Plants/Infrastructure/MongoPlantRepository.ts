@@ -26,7 +26,7 @@ export class MongoPlantRepository implements PlantRepository {
   }
 
 
-  async findById(id: string): Promise<Nullable<Plant>> {
+  async find(id: string): Promise<Nullable<Plant>> {
     return MongoPlantModel
       .init()
       .then(() => MongoPlantModel.findOne({ id }))
@@ -35,7 +35,7 @@ export class MongoPlantRepository implements PlantRepository {
   }
 
   
-  async find(limit: number = 10): Promise<Nullable<Array<Plant>>> {
+  async search(limit: number = 10): Promise<Nullable<Array<Plant>>> {
     return MongoPlantModel
       .init()
       .then(() => MongoPlantModel.find().limit(limit))

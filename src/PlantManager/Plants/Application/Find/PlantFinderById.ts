@@ -11,6 +11,6 @@ export class PlantFinderById {
   }
 
   async run(request: FindPlantByIdRequest): Promise<Nullable<Plant>> {
-    return this.repository.findById(request.id);
+    return this.repository.find(request.id);
   }
 }
