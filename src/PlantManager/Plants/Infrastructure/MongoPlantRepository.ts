@@ -9,6 +9,7 @@ import { PlantNickname } from "../Domain/PlantNickname";
 import { Maintenance } from "../../Maintenance/Domain/Maintenance";
 import { WateringMaintenance } from "../../Maintenance/Domain/WateringMaintenance";
 import { FertilizationMaintenance } from "../../Maintenance/Domain/FertilizationMaintenance";
+import { Criteria } from "src/Shared/Domain/Criteria/Criteria";
 
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
 
@@ -35,10 +36,10 @@ export class MongoPlantRepository implements PlantRepository {
   }
 
   
-  async search(limit: number = 10): Promise<Nullable<Array<Plant>>> {
+  async search(criteria: Criteria): Promise<Nullable<Array<Plant>>> {
     return MongoPlantModel
       .init()
-      .then(() => MongoPlantModel.find().limit(limit))
+      .then(() => MongoPlantModel.find().limit(criteria.getLimit()))
       .then(docs => docs ? docs.map(this.fromDocToEntity) : null)
       .catch(err => { throw new Error(err) })
   }

@@ -6,17 +6,17 @@ import httpStatus from "http-status";
 const MAX_NUMBER_PLANTS = 30;
 
 export class MyPlantsGetController implements Controller {
-  plantsFinder: PlantsSearcher;
+  plantsSearcher: PlantsSearcher;
 
-  constructor(plantsFinder: PlantsSearcher) {
-    this.plantsFinder = plantsFinder;
+  constructor(plantsSearcher: PlantsSearcher) {
+    this.plantsSearcher = plantsSearcher;
   }
 
   async run(req: Request, res: Response) {
     const { query } = req;
     const limit: number = query.limit ? +query.limit : MAX_NUMBER_PLANTS;
 
-    await this.plantsFinder
+    await this.plantsSearcher
       .run({ limit })
       .then((plants) => res.status(httpStatus.OK).send(plants))
       .catch((error: any) =>

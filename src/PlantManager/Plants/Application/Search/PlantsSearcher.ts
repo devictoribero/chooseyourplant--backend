@@ -1,6 +1,7 @@
 import { PlantRepository } from "../../Domain/PlantRepository";
 import { SearchPlantsRequest } from "./SearchPlantsRequest";
 import { Plant } from "../../Domain/Plant";
+import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria";
 import { Nullable } from "../../../../Shared/Domain/Nullable";
 
 export class PlantsSearcher {
@@ -11,6 +12,8 @@ export class PlantsSearcher {
   }
 
   async run(request: SearchPlantsRequest): Promise<Nullable<Array<Plant>>> {
-    return this.repository.search(request.limit);
+    return this.repository.search(
+      new Criteria(request.limit)
+    );
   }
 }
