@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { PlantsFinder } from "../../../../src/PlantManager/Plants/Application/Find/PlantsFinder";
+import { PlantsSearcher } from "../../../../src/PlantManager/Plants/Application/Search/PlantsSearcher";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
 const MAX_NUMBER_PLANTS = 30;
 
 export class MyPlantsGetController implements Controller {
-  plantsFinder: PlantsFinder;
+  plantsFinder: PlantsSearcher;
 
-  constructor(plantsFinder: PlantsFinder) {
+  constructor(plantsFinder: PlantsSearcher) {
     this.plantsFinder = plantsFinder;
   }
 
