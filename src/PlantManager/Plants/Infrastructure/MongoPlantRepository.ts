@@ -11,7 +11,6 @@ import { WateringMaintenance } from "../../Maintenance/Domain/WateringMaintenanc
 import { FertilizationMaintenance } from "../../Maintenance/Domain/FertilizationMaintenance";
 import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
 import { TimeInterval } from "../../../Shared/Domain/TimeInterval";
-import dayjs from 'dayjs'
 
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
 

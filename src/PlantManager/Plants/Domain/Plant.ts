@@ -1,6 +1,8 @@
 import { PlantNickname } from "./PlantNickname";
 import { Maintenance } from "../../Maintenance/Domain/Maintenance";
 import { PlantId } from "./PlantId";
+import { WateringMaintenance } from "../../Maintenance/Domain/WateringMaintenance";
+import { FertilizationMaintenance } from "../../Maintenance/Domain/FertilizationMaintenance";
 
 export class Plant {
   private id: PlantId;
@@ -34,5 +36,22 @@ export class Plant {
 
   public getMaintenance() : Maintenance {
     return this.maintenance
+  }
+  
+  static createFromPrimitives(data: {
+    id: string,
+    nickname: string,
+    maintenance: any,
+    imageUrl?: string | null
+  }): Plant {
+    return new Plant(
+      new PlantId(data.id),
+      new PlantNickname(data.nickname),
+      new Maintenance(
+        new WateringMaintenance(data.maintenance.watering),
+        new FertilizationMaintenance(data.maintenance.watering)
+      ),
+      data.imageUrl
+    )
   }
 }

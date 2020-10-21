@@ -1,18 +1,17 @@
 import { Request, Response } from "express";
-import { PlantsMaintenanceNotificationsSearcher } from "../../../../src/PlantManager/Plants/Application/Search/PlantsMaintenanceNotificationsSearcher";
+import { MaintenanceTasksSearcher } from "../../../../src/PlantManager/Maintenance/Application/Search/MaintenanceTasksSearcher";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 import dayjs from 'dayjs'
 
-export class MyPlantsPendingMaintenanceTasksGetController implements Controller {
-  plantsMaintenanceNotificatiosnSearcher: PlantsMaintenanceNotificationsSearcher;
+export class MaintenancePendingTasksGetController implements Controller {
+  maintenanceTasksSearcher: MaintenanceTasksSearcher;
 
-  constructor(plantsMaintenanceNotificatiosnSearcher: PlantsMaintenanceNotificationsSearcher) {
-    this.plantsMaintenanceNotificatiosnSearcher = plantsMaintenanceNotificatiosnSearcher;
+  constructor(maintenanceTasksSearcher: MaintenanceTasksSearcher) {
+    this.maintenanceTasksSearcher = maintenanceTasksSearcher;
   }
 
   async run(req: Request, res: Response) {
-    console.log('working')
     // We calculate the date of today
     const todayDDMMYYY = dayjs(new Date()).format('DD/MM/YYYY');
     const todayISO = new Date(todayDDMMYYY)
@@ -25,8 +24,8 @@ export class MyPlantsPendingMaintenanceTasksGetController implements Controller 
 
     
 
-    this.plantsMaintenanceNotificatiosnSearcher
-      .run(todayISO, tomorrowISO)
+    this.maintenanceTasksSearcher
+      .run({from: todayISO, to: tomorrowISO})
       .then(plantsToWaterToday => {
         res.status(httpStatus.OK).send(plantsToWaterToday)
       })
