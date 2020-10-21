@@ -36,25 +36,6 @@ export class WateringMaintenance {
     return this.lastWateringDate;
   }
 
-  public markAsWatered(): void {
-    // update the last time the plant has been watered to now
-    const now = new Date();
-    this.updateLastWateringDate(now);
-
-    // calculate next watering time from now
-    this.updateNextWateringDate(
-      this.incrementDays(now, this.getFrequencyInDays())
-    );
-  }
-
-  public updateNextWateringDate(date: Date): void {
-    this.nextWateringDate = date;
-  }
-
-  public updateLastWateringDate(date: Date): void {
-    this.lastWateringDate = date;
-  }
-
   private incrementDays(date: Date, days: number): Date {
     const dateIncremented = dayjs(date).add(days, "day").format();
     return new Date(dateIncremented);

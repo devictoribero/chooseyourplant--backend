@@ -47,29 +47,6 @@ export class FertilizationMaintenance {
     return this.lastFertilizationDate;
   }
 
-  public markAsFertilized(): void {
-    // update the last time the plant has been fertilized to now
-    const now = new Date();
-    this.updateLastFertilizationDate(now);
-
-    // calculate next fertilization time from now
-    this.updateNextFertilizationDate(
-      this.incrementDays(now, this.getFrequencyInDays())
-    );
-  }
-
-  public updateNextFertilizationDate(date: Date): void {
-    this.nextFertilizationDate = date;
-  }
-
-  public updateLastFertilizationDate(date: Date): void {
-    this.lastFertilizationDate = date;
-  }
-
-  public updateFrequency(frequencyInDays: FERTILIZATION_FREQUENCY): void {
-    this.frequencyInDays = frequencyInDays;
-  }
-
   private incrementDays(date: Date, days: number): Date {
     const dateIncremented = dayjs(date).add(days, "day").format();
     return new Date(dateIncremented);

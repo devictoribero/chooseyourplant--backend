@@ -9,7 +9,9 @@ import { PlantNickname } from "../Domain/PlantNickname";
 import { Maintenance } from "../../Maintenance/Domain/Maintenance";
 import { WateringMaintenance } from "../../Maintenance/Domain/WateringMaintenance";
 import { FertilizationMaintenance } from "../../Maintenance/Domain/FertilizationMaintenance";
-import { Criteria } from "src/Shared/Domain/Criteria/Criteria";
+import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
+import { TimeInterval } from "../../../Shared/Domain/TimeInterval";
+import dayjs from 'dayjs'
 
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
 
@@ -50,6 +52,26 @@ export class MongoPlantRepository implements PlantRepository {
       .then(async() => { await MongoPlantModel.findOneAndRemove({id}) })
       .catch(err => { throw new Error(err) })
   }
+
+  async getPlantsToWater(timeInterval: TimeInterval) {
+    const fromISO = timeInterval.getFrom()?.toISOString()
+    const toISO = timeInterval.getTo()?.toISOString()
+
+    return MongoPlantModel
+      .init()
+      .then(() => 
+        MongoPlantModel
+          .find()
+          .where('maintenance.watering.nextWateringDate')
+          .gt(fromISO)
+          .lt(toISO)
+          .exec(function(error,docs) { console.log(error, docs)})
+      )
+      .then(docs => docs ? docs.map(this.fromDocToEntity) : null)
+      .catch(err => { throw new Error(err) })
+  }
+  
+  // async getPlantsWithPendingFertilization() {}
 
   /*
    * Maps from a MongoDB Document to the Plant Entity

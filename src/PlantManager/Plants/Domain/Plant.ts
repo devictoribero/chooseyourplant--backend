@@ -35,13 +35,4 @@ export class Plant {
   public getMaintenance() : Maintenance {
     return this.maintenance
   }
-
-  public markAsWatered(): void {
-    this.maintenance.markAsWatered();
-  }
-
-  public markAsFertilized(): void {
-    this.maintenance.markAsFertilized();
-  }
-
 }

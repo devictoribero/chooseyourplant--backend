@@ -20,14 +20,14 @@ export class PlantCreator {
 
     const wateringMaintenance = new WateringMaintenance(
       watering.frequencyInDays,
+      watering?.lastWateringDate,
       watering.nextWateringDate,
-      watering?.lastWateringDate
     )
     const fertilizationMaintenance = fertilization
       ? new FertilizationMaintenance(
         fertilization.frequencyInDays,
+        fertilization?.lastFertilizationDate,
         fertilization?.nextFertilizationDate,
-        fertilization?.lastFertilizationDate
       )
       : null
 

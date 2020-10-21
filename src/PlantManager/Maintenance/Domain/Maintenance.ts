@@ -21,12 +21,4 @@ export class Maintenance {
   public getFertilizationMaintenance(): FertilizationMaintenance | null {
     return this.fertilization
   }
-
-  public markAsWatered(): void {
-    this.watering.markAsWatered();
-  }
-
-  public markAsFertilized(): void {
-    this.fertilization?.markAsFertilized();
-  }
 }

@@ -4,6 +4,7 @@ import MyPlantsGetRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGet";
 import MyPlantsGetByIdRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGetById";
 import MyPlantsPostRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsPost";
 import MyPlantsDeleteRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsDelete";
+import MyPlantsPendingMaintenanceTasksGet from "../apps/PlantManager/routes/MyPlants/MyPlantsPendingMaintenanceTasksGet";
 
 export class Application {
   app: express.Application;
@@ -28,6 +29,7 @@ export class Application {
     this.app.use(MyPlantsGetByIdRoute);
     this.app.use(MyPlantsPostRoute);
     this.app.use(MyPlantsDeleteRoute);
+    this.app.use(MyPlantsPendingMaintenanceTasksGet);
   }
 
   start() {
