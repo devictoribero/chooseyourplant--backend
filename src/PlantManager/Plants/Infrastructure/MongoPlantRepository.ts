@@ -35,10 +35,10 @@ export class MongoPlantRepository implements PlantRepository {
   }
 
   
-  async find(count: number = 10): Promise<Nullable<Array<Plant>>> {
+  async find(limit: number = 10): Promise<Nullable<Array<Plant>>> {
     return MongoPlantModel
       .init()
-      .then(() => MongoPlantModel.find().limit(count))
+      .then(() => MongoPlantModel.find().limit(limit))
       .then(docs => docs ? docs.map(this.fromDocToEntity) : null)
       .catch(err => { throw new Error(err) })
   }

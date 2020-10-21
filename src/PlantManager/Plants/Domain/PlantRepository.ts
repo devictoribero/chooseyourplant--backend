@@ -6,7 +6,7 @@ export interface PlantRepository {
 
   findById(id: String): Promise<Nullable<Plant>>;
 
-  find(count: number): Promise<Nullable<Array<Plant>>>;
+  find(limit: number): Promise<Nullable<Array<Plant>>>;
 
   remove(id: String): Promise<void>;
 }

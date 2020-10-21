@@ -1,3 +1,3 @@
 export type FindPlantsRequest = {
-  count: number;
+  limit: number;
 };

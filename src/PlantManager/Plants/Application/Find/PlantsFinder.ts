@@ -11,6 +11,6 @@ export class PlantsFinder {
   }
 
   async run(request: FindPlantsRequest): Promise<Nullable<Array<Plant>>> {
-    return this.repository.find(request.count);
+    return this.repository.find(request.limit);
   }
 }
