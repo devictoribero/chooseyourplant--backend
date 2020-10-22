@@ -3,12 +3,30 @@ import { MaintenanceTask } from "../Domain/MaintenanceTask";
 import { MaintenanceTaskId } from "../Domain/MaintenanceTaskId";
 import { MaintenanceTaskType } from "../Domain/MaintenanceTaskType";
 import { MaintenanceTaskStatus } from "../Domain/MaintenanceTaskStatus";
+import { TaskAlreadyExists } from "../Domain/TaskAlreadyExists";
 import { Plant } from "../../Plants/Domain/Plant";
 import MongoMaintenanceTaskModel from './MongoMaintenanceTaskModel'
 import { Nullable } from "../../../Shared/Domain/Nullable";
+import { GeneralError } from "../../../Shared/Domain/GeneralError";
 import { TimeInterval } from "../../../Shared/Domain/TimeInterval";
 
+const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
+
 export class MongoMaintenanceTaskRepository implements MaintenanceTaskRepository {
+  async save(task: MaintenanceTask): Promise<void> {
+    await MongoMaintenanceTaskModel
+      .init()
+      .then(() => 
+        MongoMaintenanceTaskModel.create(() => this.fromEntityToDoc(task))
+      )
+      .catch((error) => {
+        if (error.code === MONGODB_ID_ALREADY_EXISTING_ERROR_CODE) {
+          throw new TaskAlreadyExists(task.getId().toString());
+        }
+        throw new GeneralError("Tried to create a task");
+      });
+  }
+
   async search(
     interval: TimeInterval,
     status?: String,
@@ -43,12 +61,13 @@ export class MongoMaintenanceTaskRepository implements MaintenanceTaskRepository
   /*
    * Maps from an Entity to a MongoDB Document
    */
-  private fromEntityToDoc(plant: Plant): Object {
+  private fromEntityToDoc(task: MaintenanceTask): Object {
     return {
-      id: plant.getId(),
-      nickname: plant.getNickname(),
-      maintenance: plant.getMaintenance(),
-      imageUrl: plant.getImageUrl()
+      id: task.getId(),
+      date: task.getDate(),
+      type: task.getType(),
+      plant: task.getPlant(),
+      status: task.getStatus()
     }
   }
 }

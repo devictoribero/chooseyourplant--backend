@@ -48,8 +48,16 @@ export class Plant {
       new PlantId(data.id),
       new PlantNickname(data.nickname),
       new PlantMaintenance(
-        new PlantWateringMaintenance(data.maintenance.watering),
-        new PlantFertilizationMaintenance(data.maintenance.watering)
+        new PlantWateringMaintenance(
+          data.maintenance.watering.frequencyInDays,
+          data.maintenance.watering.lastWateringDate,
+          data.maintenance.watering.nextWateringDate
+        ),
+        new PlantFertilizationMaintenance(
+          data.maintenance.fertilization.frequencyInDays,
+          data.maintenance.fertilization.lastFertilizationDate,
+          data.maintenance.fertilization.nextFertilizationDate
+        )
       ),
       data.imageUrl
     )

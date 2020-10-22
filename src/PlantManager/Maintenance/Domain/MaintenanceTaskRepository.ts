@@ -8,4 +8,6 @@ export interface MaintenanceTaskRepository {
     status?: String,
     type?: String
   ): Promise<Nullable<Array<MaintenanceTask>>>;
+
+  save(task: MaintenanceTask): Promise<void>;
 }

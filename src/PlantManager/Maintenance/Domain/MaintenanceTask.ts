@@ -1,7 +1,10 @@
 import { Plant } from "../../Plants/Domain/Plant";
 import { MaintenanceTaskId } from "./MaintenanceTaskId";
 import { MaintenanceTaskType } from "./MaintenanceTaskType";
-import { MaintenanceTaskStatus, TASK_STATUS } from "./MaintenanceTaskStatus";
+import {
+  MaintenanceTaskStatus,
+  TASK_STATUS_PENDING
+} from "./MaintenanceTaskStatus";
 
 export class MaintenanceTask {
   private id: MaintenanceTaskId;
@@ -21,7 +24,7 @@ export class MaintenanceTask {
     this.date = date;
     this.type = type;
     this.plant = plant;
-    this.status = status || new MaintenanceTaskStatus(TASK_STATUS.PENDING)
+    this.status = status || new MaintenanceTaskStatus(TASK_STATUS_PENDING)
   }
 
   public getId(): MaintenanceTaskId {

@@ -1,12 +1,17 @@
 import { StringValueObject } from "../../../Shared/Domain/ValueObject/StringValueObject";
 
-enum TASK_TYPE {
-  WATERING = 'watering',
-  FERTILIZATION = 'fertilization'
-}
+export const TASK_TYPE_WATERING = 'WATERING'
+export const TASK_TYPE_FERTILIZATION = 'FERTILIZATION'
 
 export class MaintenanceTaskType extends StringValueObject {
-  constructor(type: TASK_TYPE) {
+  constructor(type: string) {
     super(type);
+    this.ensureTypeHasCorrectValue(type)
+  }
+
+  private ensureTypeHasCorrectValue(type: string) : void {
+    if (type !== TASK_TYPE_WATERING && type !== TASK_TYPE_FERTILIZATION) {
+      throw new Error('Invalid MaintenanceTaskType')
+    }
   }
 }
