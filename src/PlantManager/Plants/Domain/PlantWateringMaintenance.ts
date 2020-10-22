@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-export class WateringMaintenance {
+export class PlantWateringMaintenance {
   private frequencyInDays: number;
   private lastWateringDate: Date | null;
   private nextWateringDate: Date;

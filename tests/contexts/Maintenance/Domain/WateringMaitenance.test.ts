@@ -1,7 +1,7 @@
-import { WateringMaintenance } from "../../../../src/PlantManager/Maintenance/Domain/WateringMaintenance";
+import { PlantWateringMaintenance } from "../../../../src/PlantManager/Plants/Domain/PlantWateringMaintenance";
 
-describe("WateringMaintenance Domain Model ----", () => {
-  describe('WateringMaintenance is instanced correctly with a the most basic watering maintenance information', () => {
+describe("PlantWateringMaintenance Domain Model ----", () => {
+  describe('PlantWateringMaintenance is instanced correctly with a the most basic watering maintenance information', () => {
     it(`
         GIVEN
           frequencyInDays: 4
@@ -11,13 +11,13 @@ describe("WateringMaintenance Domain Model ----", () => {
           the watering frequencyInDays must be 4
       `, () => {
       // GIVEN
-      const watering = new WateringMaintenance(4);
+      const watering = new PlantWateringMaintenance(4);
       // THEN
       expect(watering.getFrequencyInDays()).toEqual(4);
     });
   })
 
-  describe('WateringMaintenance is instanced correctly given a lastWateringDate', () => {
+  describe('PlantWateringMaintenance is instanced correctly given a lastWateringDate', () => {
     it(`
         GIVEN
           frequencyInDays: 4,
@@ -28,14 +28,14 @@ describe("WateringMaintenance Domain Model ----", () => {
           the nextWateringDate must be '2020-10-20T14:46:00.000Z'
       `, () => {
       // GIVEN
-      const watering = new WateringMaintenance(4, new Date('2020-10-16T14:46:00.000Z'), null)
+      const watering = new PlantWateringMaintenance(4, new Date('2020-10-16T14:46:00.000Z'), null)
       // THEN
       expect(watering.getLastWateringDate()).toEqual(new Date('2020-10-16T14:46:00.000Z'))
       expect(watering.getNextWateringDate()).toEqual(new Date('2020-10-20T14:46:00.000Z'))
     });
   })
 
-  describe('WateringMaintenance is instanced correctly given a nextWateringDate', () => {
+  describe('PlantWateringMaintenance is instanced correctly given a nextWateringDate', () => {
     it(`
         GIVEN
           frequencyInDays: 4,
@@ -46,7 +46,7 @@ describe("WateringMaintenance Domain Model ----", () => {
           the nextWateringDate must be '2020-10-16T14:46:00.000Z'
       `, () => {
       // GIVEN
-      const watering = new WateringMaintenance(4, null, new Date('2020-10-16T14:46:00.000Z'))
+      const watering = new PlantWateringMaintenance(4, null, new Date('2020-10-16T14:46:00.000Z'))
       // THEN
       expect(watering.getLastWateringDate()).toEqual(null)
       expect(watering.getNextWateringDate())
@@ -54,7 +54,7 @@ describe("WateringMaintenance Domain Model ----", () => {
     });
   })
 
-  describe('WateringMaintenance is instanced correctly given a complete watering specification', () => {
+  describe('PlantWateringMaintenance is instanced correctly given a complete watering specification', () => {
     it(`
         GIVEN
           frequencyInDays: 4,
@@ -66,7 +66,7 @@ describe("WateringMaintenance Domain Model ----", () => {
           the nextWateringDate must be '2020-10-20T14:46:00.000Z'
       `, () => {
         // GIVEN
-        const watering = new WateringMaintenance(
+        const watering = new PlantWateringMaintenance(
           4,
           new Date("2020-10-16T14:46:00.000Z"),
           new Date('2020-10-20T14:46:00.000Z'),

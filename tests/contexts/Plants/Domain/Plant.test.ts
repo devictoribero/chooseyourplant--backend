@@ -1,9 +1,9 @@
 import { Uuid } from "../../../../src/Shared/Domain/ValueObject/Uuid";
 import { PlantId } from "../../../../src/PlantManager/Plants/Domain/PlantId";
 import { PlantNickname } from "../../../../src/PlantManager/Plants/Domain/PlantNickname";
-import { WateringMaintenance } from "../../../../src/PlantManager/Maintenance/Domain/WateringMaintenance";
-import { FertilizationMaintenance } from "../../../../src/PlantManager/Maintenance/Domain/FertilizationMaintenance";
-import { Maintenance } from "../../../../src/PlantManager/Maintenance/Domain/Maintenance";
+import { PlantWateringMaintenance } from "../../../../src/PlantManager/Plants/Domain/PlantWateringMaintenance";
+import { PlantFertilizationMaintenance } from "../../../../src/PlantManager/Plants/Domain/PlantFertilizationMaintenance";
+import { PlantMaintenance } from "../../../../src/PlantManager/Plants/Domain/PlantMaintenance";
 import { Plant } from "../../../../src/PlantManager/Plants/Domain/Plant";
 import dayjs from 'dayjs'
 
@@ -28,8 +28,8 @@ describe("Plant Domain Model ----", () => {
       const plant = new Plant(
           new PlantId(id),
           new PlantNickname("My Princess"),
-          new Maintenance(
-            new WateringMaintenance(4)
+          new PlantMaintenance (
+            new PlantWateringMaintenance(4)
           )
       );
   
@@ -67,8 +67,8 @@ describe("Plant Domain Model ----", () => {
       const plant = new Plant(
           new PlantId(id),
           new PlantNickname("My Princess"),
-          new Maintenance(
-            new WateringMaintenance(4, null, new Date('2020-10-16T07:41:59.983Z')),
+          new PlantMaintenance (
+            new PlantWateringMaintenance(4, null, new Date('2020-10-16T07:41:59.983Z')),
           )
       );
   
@@ -101,8 +101,8 @@ describe("Plant Domain Model ----", () => {
         const plant = new Plant(
             new PlantId(id),
             new PlantNickname("My Princess"),
-            new Maintenance(
-              new WateringMaintenance(
+            new PlantMaintenance (
+              new PlantWateringMaintenance(
                 4,
                 new Date("2020-10-16T07:41:59.983Z"),
                 new Date('2020-10-20T07:41:59.983Z'),
@@ -141,13 +141,13 @@ describe("Plant Domain Model ----", () => {
       const plant = new Plant(
           new PlantId(id),
           new PlantNickname("My Princess"),
-          new Maintenance(
-            new WateringMaintenance(
+          new PlantMaintenance (
+            new PlantWateringMaintenance(
               4,
               new Date("2020-10-16T07:41:59.983Z"),
               new Date('2020-10-20T07:41:59.983Z'),
             ),
-            new FertilizationMaintenance(7),
+            new PlantFertilizationMaintenance(7),
           )
       );
 

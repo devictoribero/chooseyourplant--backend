@@ -1,7 +1,7 @@
-import { FertilizationMaintenance } from "../../../../src/PlantManager/Maintenance/Domain/FertilizationMaintenance";
+import { PlantFertilizationMaintenance } from "../../../../src/PlantManager/Plants/Domain/PlantFertilizationMaintenance";
 
-describe("FertilizationMaintenance Domain Model ----", () => {
-  describe('FertilizationMaintenance is instanced correctly with a the most basic Fertilization maintenance information', () => {
+describe("PlantFertilizationMaintenance Domain Model ----", () => {
+  describe('PlantFertilizationMaintenance is instanced correctly with a the most basic Fertilization maintenance information', () => {
     it(`
         GIVEN
           frequencyInDays: 7
@@ -9,13 +9,13 @@ describe("FertilizationMaintenance Domain Model ----", () => {
           the Fertilization frequencyInDays must be 7
       `, () => {
       // GIVEN
-      const fertilization = new FertilizationMaintenance(7);
+      const fertilization = new PlantFertilizationMaintenance(7);
       // THEN
       expect(fertilization.getFrequencyInDays()).toEqual(7);
     });
   })
 
-  describe('FertilizationMaintenance is instanced correctly given a lastFertilizationDate', () => {
+  describe('PlantFertilizationMaintenance is instanced correctly given a lastFertilizationDate', () => {
     it(`
         GIVEN
           frequencyInDays: 7
@@ -26,7 +26,7 @@ describe("FertilizationMaintenance Domain Model ----", () => {
           the nextFertilizationDate must be '2020-10-23T14:46:00.000Z'
       `, () => {
       // GIVEN
-      const fertilization = new FertilizationMaintenance(7, new Date('2020-10-16T14:46:00.000Z'), null)
+      const fertilization = new PlantFertilizationMaintenance(7, new Date('2020-10-16T14:46:00.000Z'), null)
       // THEN
       expect(fertilization.getLastFertilizationDate())
         .toEqual(new Date('2020-10-16T14:46:00.000Z'))
@@ -35,7 +35,7 @@ describe("FertilizationMaintenance Domain Model ----", () => {
     });
   })
 
-  describe('FertilizationMaintenance is instanced correctly given a nextFertilizationDate', () => {
+  describe('PlantFertilizationMaintenance is instanced correctly given a nextFertilizationDate', () => {
     it(`
         GIVEN
           frequencyInDays: 7
@@ -46,7 +46,7 @@ describe("FertilizationMaintenance Domain Model ----", () => {
           the nextFertilizationDate must be '2020-10-16T14:46:00.000Z'
       `, () => {
       // GIVEN
-      const fertilization = new FertilizationMaintenance(7, null, new Date('2020-10-16T14:46:00.000Z'))
+      const fertilization = new PlantFertilizationMaintenance(7, null, new Date('2020-10-16T14:46:00.000Z'))
       // THEN
       expect(fertilization.getLastFertilizationDate()).toEqual(null)
       expect(fertilization.getNextFertilizationDate())
@@ -54,7 +54,7 @@ describe("FertilizationMaintenance Domain Model ----", () => {
     });
   })
 
-  describe('FertilizationMaintenance is instanced correctly given a complete Fertilization specification', () => {
+  describe('PlantFertilizationMaintenance is instanced correctly given a complete Fertilization specification', () => {
     it(`
         GIVEN
           frequencyInDays: 7
@@ -66,7 +66,7 @@ describe("FertilizationMaintenance Domain Model ----", () => {
           the nextFertilizationDate must be '2020-10-23T14:46:00.000Z'
       `, () => {
         // GIVEN
-        const fertilization = new FertilizationMaintenance(
+        const fertilization = new PlantFertilizationMaintenance(
           4,
           new Date("2020-10-16T14:46:00.000Z"),
           new Date('2020-10-23T14:46:00.000Z'),

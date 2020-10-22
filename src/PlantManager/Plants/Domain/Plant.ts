@@ -1,19 +1,19 @@
 import { PlantNickname } from "./PlantNickname";
-import { Maintenance } from "../../Maintenance/Domain/Maintenance";
+import { PlantMaintenance } from "./PlantMaintenance";
 import { PlantId } from "./PlantId";
-import { WateringMaintenance } from "../../Maintenance/Domain/WateringMaintenance";
-import { FertilizationMaintenance } from "../../Maintenance/Domain/FertilizationMaintenance";
+import { PlantWateringMaintenance } from "./PlantWateringMaintenance";
+import { PlantFertilizationMaintenance } from "./PlantFertilizationMaintenance";
 
 export class Plant {
   private id: PlantId;
   private nickname: PlantNickname;
-  private maintenance: Maintenance;
+  private maintenance: PlantMaintenance;
   private imageUrl: string | null;
 
   constructor(
     id: PlantId,
     nickname: PlantNickname,
-    maintenance: Maintenance,
+    maintenance: PlantMaintenance,
     imageUrl?: string | null
   ) {
     this.id = id;
@@ -34,7 +34,7 @@ export class Plant {
     return this.imageUrl
   }
 
-  public getMaintenance() : Maintenance {
+  public getMaintenance() : PlantMaintenance {
     return this.maintenance
   }
   
@@ -47,9 +47,9 @@ export class Plant {
     return new Plant(
       new PlantId(data.id),
       new PlantNickname(data.nickname),
-      new Maintenance(
-        new WateringMaintenance(data.maintenance.watering),
-        new FertilizationMaintenance(data.maintenance.watering)
+      new PlantMaintenance(
+        new PlantWateringMaintenance(data.maintenance.watering),
+        new PlantFertilizationMaintenance(data.maintenance.watering)
       ),
       data.imageUrl
     )

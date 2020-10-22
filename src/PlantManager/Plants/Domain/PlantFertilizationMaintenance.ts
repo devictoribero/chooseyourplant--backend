@@ -12,7 +12,7 @@ export type FertilizationMaintenanceType = {
   lastFertilizationDate?: Date;
 };
 
-export class FertilizationMaintenance {
+export class PlantFertilizationMaintenance {
   private frequencyInDays: FERTILIZATION_FREQUENCY;
   private lastFertilizationDate: Date | null;
   private nextFertilizationDate: Date;

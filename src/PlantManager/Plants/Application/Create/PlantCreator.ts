@@ -2,9 +2,9 @@ import { PlantRepository } from "../../Domain/PlantRepository";
 import { CreatePlantRequest } from "./CreatePlantRequest";
 import { Plant } from "../../Domain/Plant";
 import { PlantNickname } from "../../Domain/PlantNickname";
-import { Maintenance } from "../../../Maintenance/Domain/Maintenance";
-import { WateringMaintenance } from "../../../Maintenance/Domain/WateringMaintenance";
-import { FertilizationMaintenance } from "../../../Maintenance/Domain/FertilizationMaintenance";
+import { PlantMaintenance } from "../../Domain/PlantMaintenance";
+import { PlantWateringMaintenance } from "../../Domain/PlantWateringMaintenance";
+import { PlantFertilizationMaintenance } from "../../Domain/PlantFertilizationMaintenance";
 import { PlantId } from "../../Domain/PlantId";
 
 export class PlantCreator {
@@ -18,13 +18,13 @@ export class PlantCreator {
     // The fertilization is not required, because not every one does it
     const { watering, fertilization } = request.maintenance;
 
-    const wateringMaintenance = new WateringMaintenance(
+    const wateringMaintenance = new PlantWateringMaintenance(
       watering.frequencyInDays,
       watering?.lastWateringDate,
       watering.nextWateringDate,
     )
     const fertilizationMaintenance = fertilization
-      ? new FertilizationMaintenance(
+      ? new PlantFertilizationMaintenance(
         fertilization.frequencyInDays,
         fertilization?.lastFertilizationDate,
         fertilization?.nextFertilizationDate,
@@ -35,7 +35,7 @@ export class PlantCreator {
       new Plant(
         new PlantId(request.id),
         new PlantNickname(request.nickname),
-        new Maintenance(wateringMaintenance, fertilizationMaintenance)
+        new PlantMaintenance(wateringMaintenance, fertilizationMaintenance)
       )
     );
   }
