@@ -14,7 +14,10 @@ export class Database {
   }
 
   generateUrl(): string {
-    return `${this.protocol}${this.host}:${this.port}/${this.name}`;
+    // Needed to use trasactions.
+    const querystrings = 'replicaSet=rs'
+
+    return `${this.protocol}${this.host}:${this.port}/${this.name}?${querystrings}`;
   }
 
   async connect(): Promise<void> {

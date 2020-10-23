@@ -19,7 +19,7 @@
     "dayjs": "^1.9.1",
     "express": "4.17.1",
     "http-status": "^1.4.2",
-    "mongoose": "^5.10.8",
+    "mongoose": "^5.10.9",
     "uuid": "^8.3.1",
     "uuid-validate": "0.0.3"
   },

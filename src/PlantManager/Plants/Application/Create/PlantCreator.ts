@@ -6,7 +6,7 @@ import {
   MaintenanceTaskCreator,
   TASKS_TYPES,
   TASKS_STATUS
-} from "src/PlantManager/Maintenance/Application/Create/MaintenanceTaskCreator";
+} from "../../../Maintenance/Application/Create/MaintenanceTaskCreator";
 import { Uuid } from '../../../../Shared/Domain/ValueObject/Uuid'
 
 export class PlantCreator {
@@ -45,21 +45,19 @@ export class PlantCreator {
 
     // If the plant has been created successfully,
     // we create the tasks related to watering and fertilization of this plant
-    // const nextWateringDate = plant
-    //   .getMaintenance()
-    //   .getWateringMaintenance()
-    //   .getNextWateringDate()
+    const nextWateringDate = plant
+      .getMaintenance()
+      .getWateringMaintenance()
+      .getNextWateringDate()
 
-    // await this.maintenanceTaskCreator
-    //   .run({
-    //     id: Uuid.generate().toString(),
-    //     date: nextWateringDate,
-    //     type: TASKS_TYPES.WATERING,
-    //     plant: plant,
-    //     status: TASKS_STATUS.PENDING,
-    //   })
-    //   .catch(err => {})
-
-      // close transaction
+    await this.maintenanceTaskCreator
+      .run({
+        id: Uuid.generate().toString(),
+        date: nextWateringDate,
+        type: TASKS_TYPES.WATERING,
+        plant: plant,
+        status: TASKS_STATUS.PENDING,
+      })
+      .catch(err => {})
   }
 }
