@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { PlantFinderById } from "../../../../src/PlantManager/Plants/Application/Find/PlantFinderById";
+import { PlantFinder } from "../../../../src/PlantManager/Plants/Application/Find/PlantFinder";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
 export class MyPlantsGetByIdController implements Controller {
-  plantFinderById: PlantFinderById;
+  plantFinderById: PlantFinder;
 
-  constructor(plantFinderById: PlantFinderById) {
+  constructor(plantFinderById: PlantFinder) {
     this.plantFinderById = plantFinderById;
   }
 

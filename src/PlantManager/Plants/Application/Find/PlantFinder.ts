@@ -1,16 +1,16 @@
 import { PlantRepository } from "../../Domain/PlantRepository";
-import { FindPlantByIdRequest } from "./FindPlantByIdRequest";
+import { FindPlantRequest } from "./FindPlantRequest";
 import { Plant } from "../../Domain/Plant";
 import { Nullable } from "../../../../Shared/Domain/Nullable";
 
-export class PlantFinderById {
+export class PlantFinder {
   private repository;
 
   constructor(repository: PlantRepository) {
     this.repository = repository;
   }
 
-  async run(request: FindPlantByIdRequest): Promise<Nullable<Plant>> {
+  async run(request: FindPlantRequest): Promise<Nullable<Plant>> {
     return this.repository.find(request.id);
   }
 }

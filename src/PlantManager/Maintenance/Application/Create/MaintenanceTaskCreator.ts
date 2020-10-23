@@ -2,9 +2,27 @@ import { MaintenanceTaskRepository } from "../../Domain/MaintenanceTaskRepositor
 import { CreateMaintenanceTaskRequest } from "./CreateMaintenanceTaskRequest";
 import { MaintenanceTask } from "../../Domain/MaintenanceTask"
 import { MaintenanceTaskId } from "../../Domain/MaintenanceTaskId"
-import { MaintenanceTaskType } from "../../Domain/MaintenanceTaskType"
+import {
+  MaintenanceTaskType,
+  TASK_TYPE_WATERING,
+  TASK_TYPE_FERTILIZATION
+} from "../../Domain/MaintenanceTaskType"
 import { Plant } from "../../../Plants/Domain/Plant";
-import { MaintenanceTaskStatus } from "../../Domain/MaintenanceTaskStatus"
+import {
+  MaintenanceTaskStatus,
+  TASK_STATUS_PENDING,
+  TASK_STATUS_COMPLETED
+} from "../../Domain/MaintenanceTaskStatus"
+
+export const TASKS_TYPES = {
+  'WATERING': TASK_TYPE_WATERING,
+  'FERTILIZATION': TASK_TYPE_FERTILIZATION,
+}
+
+export const TASKS_STATUS = {
+  'PENDING': TASK_STATUS_PENDING,
+  'COMPLETED': TASK_STATUS_COMPLETED,
+}
 
 export class MaintenanceTaskCreator {
   private repository;

@@ -3,7 +3,7 @@ import { Nullable } from "../../../Shared/Domain/Nullable";
 import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
 
 export interface PlantRepository {
-  save(plant: Plant): Promise<void>;
+  save(plant: Plant, transaction: any): Promise<void>;
 
   find(id: String): Promise<Nullable<Plant>>;
 

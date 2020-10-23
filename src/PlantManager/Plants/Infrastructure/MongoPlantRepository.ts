@@ -14,11 +14,16 @@ import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
 
 export class MongoPlantRepository implements PlantRepository {
-  async save(plant: Plant): Promise<void> {
+  async save(plant: Plant, transaction: any): Promise<void> {
     await MongoPlantModel
       .init()
-      .then(() => MongoPlantModel.create(this.fromEntityToDoc(plant)))
+      .then(() => 
+        MongoPlantModel.create(
+          [this.fromEntityToDoc(plant)],
+          {session: transaction}
+      ))
       .catch((error) => {
+        console.log(error)
         if (error.code === MONGODB_ID_ALREADY_EXISTING_ERROR_CODE) {
           throw new PlantAlreadyExists(plant.getId());
         }
