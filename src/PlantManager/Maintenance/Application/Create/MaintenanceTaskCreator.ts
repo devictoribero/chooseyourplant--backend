@@ -37,7 +37,7 @@ export class MaintenanceTaskCreator {
         new MaintenanceTaskId(request.id),
         request.date,
         new MaintenanceTaskType(request.type),
-        Plant.createFromPrimitives(request.plant),
+        Plant.fromPrimitives(request.plant),
         new MaintenanceTaskStatus(request.status)
       )
     );

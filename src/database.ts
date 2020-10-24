@@ -6,11 +6,16 @@ export class Database {
   port: number;
   name: string;
   url: string;
+  options: any;
 
   constructor(name: string, port: number = 27017) {
     this.name = name;
     this.port = port;
     this.url = this.generateUrl();
+    this.options = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
   }
 
   generateUrl(): string {
@@ -22,7 +27,7 @@ export class Database {
 
   async connect(): Promise<void> {
     return mongoose
-      .connect(this.url)
+      .connect(this.url, this.options)
       .then(() =>
         console.log(
           `⚡️[database]: has connected successfully to ${this.generateUrl()}`

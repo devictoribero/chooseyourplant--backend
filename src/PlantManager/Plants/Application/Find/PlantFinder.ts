@@ -1,6 +1,5 @@
 import { PlantRepository } from "../../Domain/PlantRepository";
 import { FindPlantRequest } from "./FindPlantRequest";
-import { Plant } from "../../Domain/Plant";
 import { Nullable } from "../../../../Shared/Domain/Nullable";
 
 export class PlantFinder {
@@ -10,7 +9,9 @@ export class PlantFinder {
     this.repository = repository;
   }
 
-  async run(request: FindPlantRequest): Promise<Nullable<Plant>> {
-    return this.repository.find(request.id);
+  async run(request: FindPlantRequest): Promise<Nullable<any>> {
+    return this.repository
+      .find(request.id)
+      .then(plant => plant?.toPrimitives())
   }
 }

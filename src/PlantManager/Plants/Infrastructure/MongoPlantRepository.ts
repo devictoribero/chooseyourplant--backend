@@ -4,11 +4,6 @@ import MongoPlantModel from "./MongoPlantModel";
 import { Nullable } from "../../../Shared/Domain/Nullable";
 import { PlantAlreadyExists } from "../Domain/PlantAlreadyExists";
 import { GeneralError } from "../../../Shared/Domain/GeneralError";
-import { PlantId } from "../Domain/PlantId";
-import { PlantNickname } from "../Domain/PlantNickname";
-import { PlantMaintenance } from "../Domain/PlantMaintenance";
-import { PlantWateringMaintenance } from "../Domain/PlantWateringMaintenance";
-import { PlantFertilizationMaintenance } from "../Domain/PlantFertilizationMaintenance";
 import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
 
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
@@ -18,10 +13,7 @@ export class MongoPlantRepository implements PlantRepository {
     await MongoPlantModel
       .init()
       .then(() => 
-        MongoPlantModel.create(
-          [this.fromEntityToDoc(plant)],
-          {session: transaction}
-      ))
+        MongoPlantModel.create([plant.toPrimitives()], {session: transaction}))
       .catch((error) => {
         console.log(error)
         if (error.code === MONGODB_ID_ALREADY_EXISTING_ERROR_CODE) {
@@ -35,8 +27,8 @@ export class MongoPlantRepository implements PlantRepository {
   async find(id: string): Promise<Nullable<Plant>> {
     return MongoPlantModel
       .init()
-      .then(() => MongoPlantModel.findOne({ id }))
-      .then(doc => doc ? this.fromDocToEntity(doc) : null)
+      .then(() => MongoPlantModel.findOne({ id }).lean())
+      .then((doc: any) => doc ? Plant.fromPrimitives({...doc, id}) : null)
       .catch(err => { throw new Error(err) })
   }
 
@@ -44,9 +36,15 @@ export class MongoPlantRepository implements PlantRepository {
   async search(criteria: Criteria): Promise<Nullable<Array<Plant>>> {
     return MongoPlantModel
       .init()
-      .then(() => MongoPlantModel.find().limit(criteria.getLimit()))
-      .then(docs => docs ? docs.map(this.fromDocToEntity) : null)
-      .catch(err => { throw new Error(err) })
+      .then(() => MongoPlantModel.find().limit(criteria.getLimit()).lean())
+      .then(docs => docs
+        ? docs.map((doc: any) => Plant.fromPrimitives({...doc}))
+        : null
+      )
+      .catch(err => { 
+        console.log(err)
+        throw new Error(err)
+       })
   }
 
   async remove(id: string): Promise<void> {
@@ -55,47 +53,4 @@ export class MongoPlantRepository implements PlantRepository {
       .then(async() => { await MongoPlantModel.findOneAndRemove({id}) })
       .catch(err => { throw new Error(err) })
   }
-
-  /*
-   * Maps from a MongoDB Document to the Plant Entity
-   */
-  private fromDocToEntity(doc: any) : Plant {
-    const {watering, fertilization} = doc.maintenance
-    const wateringMaintenance = new PlantWateringMaintenance(
-      watering.frequencyInDays,
-      convertToNullableDate(watering.lastWateringDate),
-      convertToNullableDate(watering.nextWateringDate),
-    )
-    const fertilizationMaintenance = fertilization
-      ? new PlantFertilizationMaintenance(
-        fertilization.frequencyInDays,
-        convertToNullableDate(fertilization.lastFertilizationDate),
-        convertToNullableDate(fertilization.nextFertilizationDate),
-      )
-      : null
-    
-    return new Plant(
-      new PlantId(doc.id),
-      new PlantNickname(doc.nickname),
-      new PlantMaintenance(wateringMaintenance, fertilizationMaintenance),
-      doc.imageUrl
-    )
-  }
-
-  /*
-   * Maps from an Entity to a MongoDB Document
-   */
-  private fromEntityToDoc(plant: Plant): Object {
-    return {
-      id: plant.getId(),
-      nickname: plant.getNickname(),
-      maintenance: plant.getMaintenance(),
-      imageUrl: plant.getImageUrl()
-    }
-  }
-}
-
-
-function convertToNullableDate(stringDate: string): Date | null {
-  return stringDate ? new Date(stringDate) : null
 }

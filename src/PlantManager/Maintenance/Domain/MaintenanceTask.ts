@@ -46,4 +46,30 @@ export class MaintenanceTask {
   public getStatus(): MaintenanceTaskStatus {
     return this.status;
   }
+
+  public toPrimitives() {
+    return {
+      id: this.getId(),
+      date: this.getDate().toISOString(),
+      type: this.getType(),
+      plant: this.getPlant().toPrimitives(),
+      status: this.getStatus(),
+    }
+  }
+
+  static fromPrimitives(data: {
+    id: string,
+    date: Date,
+    type: string,
+    plant: any,
+    status: string,
+  }) {
+    return new MaintenanceTask(
+      new MaintenanceTaskId(data.id),
+      new Date(data.date),
+      new MaintenanceTaskType(data.type),
+      Plant.fromPrimitives(data.plant),
+      new MaintenanceTaskStatus(data.status),
+    )
+  }
 }

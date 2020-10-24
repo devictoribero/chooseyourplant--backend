@@ -30,36 +30,55 @@ export class Plant {
     return this.nickname.toString();
   }
 
-  public getImageUrl(): string | null {
-    return this.imageUrl
-  }
-
-  public getMaintenance() : PlantMaintenance {
+  public getMaintenance(): PlantMaintenance {
     return this.maintenance
   }
   
-  static createFromPrimitives(data: {
+  public getImageUrl(): string | null {
+    return this.imageUrl
+  }
+  
+
+  public toPrimitives() {
+    return {
+      id: this.getId(),
+      nickname: this.getNickname(),
+      maintenance: this.getMaintenance(),
+      imageUrl: this.getImageUrl()
+    }
+  }
+
+  static fromPrimitives(data: {
     id: string,
     nickname: string,
     maintenance: any,
     imageUrl?: string | null
   }): Plant {
+    const {watering, fertilization} = data.maintenance
+    const fertilizationMaintenance = !fertilization
+      ? null
+      : new PlantFertilizationMaintenance(
+        fertilization.frequencyInDays,
+        convertToNullableDate(fertilization.lastFertilizationDate),
+        convertToNullableDate(fertilization.nextFertilizationDate),
+      )
+    
     return new Plant(
       new PlantId(data.id),
       new PlantNickname(data.nickname),
       new PlantMaintenance(
         new PlantWateringMaintenance(
-          data.maintenance.watering.frequencyInDays,
-          data.maintenance.watering.lastWateringDate,
-          data.maintenance.watering.nextWateringDate
+          watering.frequencyInDays,
+          convertToNullableDate(watering.lastWateringDate),
+          convertToNullableDate(watering.nextWateringDate),
         ),
-        new PlantFertilizationMaintenance(
-          data.maintenance.fertilization.frequencyInDays,
-          data.maintenance.fertilization.lastFertilizationDate,
-          data.maintenance.fertilization.nextFertilizationDate
-        )
+        fertilizationMaintenance
       ),
       data.imageUrl
     )
   }
+}
+
+function convertToNullableDate(stringDate: string): Date | null {
+  return stringDate ? new Date(stringDate) : null
 }

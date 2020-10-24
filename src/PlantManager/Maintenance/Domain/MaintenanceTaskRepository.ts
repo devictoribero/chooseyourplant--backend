@@ -9,5 +9,5 @@ export interface MaintenanceTaskRepository {
     type?: String
   ): Promise<Nullable<Array<MaintenanceTask>>>;
 
-  save(task: MaintenanceTask): Promise<void>;
+  save(task: MaintenanceTask, transaction?: any): Promise<void>;
 }

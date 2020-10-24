@@ -9,11 +9,10 @@ const router = Router();
 
 // Dependencies for creating a maintenance task
 const maintenanceTaskRepository = new MongoMaintenanceTaskRepository();
-const maintenanceTaskCreator = new MaintenanceTaskCreator(maintenanceTaskRepository);
 
 // Dependencies for creating a maintenance plant
 const mongoPlantRepository = new MongoPlantRepository();
-const plantCreator = new PlantCreator(mongoPlantRepository, maintenanceTaskCreator);
+const plantCreator = new PlantCreator(mongoPlantRepository, maintenanceTaskRepository);
 const myPlantPostController = new MyPlantsPostController(plantCreator);
 
 router.post("/my-plants", (req: Request, res: Response) =>

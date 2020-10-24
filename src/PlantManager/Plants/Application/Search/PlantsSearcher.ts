@@ -11,9 +11,11 @@ export class PlantsSearcher {
     this.repository = repository;
   }
 
-  async run(request: SearchPlantsRequest): Promise<Nullable<Array<Plant>>> {
-    return this.repository.search(
-      new Criteria(request.limit)
-    );
+  async run(request: SearchPlantsRequest): Promise<Nullable<Array<any>>> {
+    const plants = await this.repository.search(new Criteria(request.limit))
+
+    return plants
+      ? plants.map(plant => plant.toPrimitives())
+      : null
   }
 }

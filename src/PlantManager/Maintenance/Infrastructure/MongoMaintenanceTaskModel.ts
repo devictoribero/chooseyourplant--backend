@@ -11,5 +11,5 @@ export const maintenanceTaskSchema = new Schema({
   status: {type: String, required: true },
 });
 
-export const MongoMaintenanceTaskPlantModel = model("maintenanceTaskSchema", maintenanceTaskSchema);
-export default MongoMaintenanceTaskPlantModel;
+export const MongoMaintenanceTaskModel = model("maintenance_task", maintenanceTaskSchema);
+export default MongoMaintenanceTaskModel;
