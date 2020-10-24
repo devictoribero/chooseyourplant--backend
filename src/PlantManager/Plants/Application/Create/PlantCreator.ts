@@ -5,22 +5,21 @@ import { Plant } from "../../Domain/Plant";
 import {
   TASKS_TYPES,
   TASKS_STATUS
-} from "../../../Maintenance/Application/Create/MaintenanceTaskCreator";
+} from "../../../Maintenance/Application/Create/TaskCreator";
 import { Uuid } from '../../../../Shared/Domain/ValueObject/Uuid'
-import { MaintenanceTaskRepository } from '../../../Maintenance/Domain/MaintenanceTaskRepository';
-import { MaintenanceTask } from '../../../Maintenance/Domain/MaintenanceTask';
-import { promises } from 'fs';
+import { TaskRepository } from '../../../Maintenance/Domain/TaskRepository';
+import { Task } from '../../../Maintenance/Domain/Task';
 
 export class PlantCreator {
   private repository;
-  private maintenanceTaskRepository;
+  private taskRepository;
 
   constructor(
     repository: PlantRepository,
-    maintenanceTaskRepository: MaintenanceTaskRepository,
+    taskRepository: TaskRepository,
   ) {
     this.repository = repository;
-    this.maintenanceTaskRepository = maintenanceTaskRepository;
+    this.taskRepository = taskRepository;
   }
 
   async run(request: CreatePlantRequest): Promise<void> {
@@ -101,8 +100,8 @@ export class PlantCreator {
   }
 
   private createTask(data: any, transaction: any) {
-    return this.maintenanceTaskRepository.save(
-      MaintenanceTask.fromPrimitives({
+    return this.taskRepository.save(
+      Task.fromPrimitives({
         id: Uuid.generate().toString(),
         // @ts-ignore
         date: data.date,

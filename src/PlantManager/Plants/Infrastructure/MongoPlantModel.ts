@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-// import {MaintenanceSchemaType} from "../../Maintenance/Infrastructure/MongoMaintenanceModel"
 
 // Mongoose auto generates an `_id` field for all instances.
 // I wanted to overwrite it, but looks it doesn't work

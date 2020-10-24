@@ -1,18 +1,18 @@
-import { MaintenanceTaskRepository } from "../../Domain/MaintenanceTaskRepository";
+import { TaskRepository } from "../../Domain/TaskRepository";
 import { Nullable } from "../../../../Shared/Domain/Nullable";
-import { SearchMaintenanceTasksRequest } from './SearchMaintenanceTasksRequest'
+import { SearchTasksRequest } from './SearchTasksRequest'
 import { TimeInterval } from "../../../../Shared/Domain/TimeInterval";
-import { MaintenanceTask } from "../../Domain/MaintenanceTask";
+import { Task } from "../../Domain/Task";
 import dayjs from 'dayjs'
 
-export class MaintenanceTasksSearcher {
+export class TasksSearcher {
   private repository;
 
-  constructor(repository: MaintenanceTaskRepository) {
+  constructor(repository: TaskRepository) {
     this.repository = repository;
   }
 
-  async run(request: SearchMaintenanceTasksRequest): Promise<Nullable<Array<MaintenanceTask>>> {
+  async run(request: SearchTasksRequest): Promise<Nullable<Array<Task>>> {
     // Calculate midnight dates because the interval it's easier to calculate
     const fromMidnightDate = this.getMidnightDate(request.from)
     const toMidnightDate = this.getMidnightDate(request.to)

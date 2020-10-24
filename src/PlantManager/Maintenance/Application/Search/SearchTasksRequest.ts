@@ -1,4 +1,4 @@
-export type SearchMaintenanceTasksRequest = {
+export type SearchTasksRequest = {
   from?: Date;
   to?: Date;
   type?: String,

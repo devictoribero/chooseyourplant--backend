@@ -1,33 +1,33 @@
 import { Plant } from "../../Plants/Domain/Plant";
-import { MaintenanceTaskId } from "./MaintenanceTaskId";
-import { MaintenanceTaskType } from "./MaintenanceTaskType";
+import { TaskId } from "./TaskId";
+import { TaskType } from "./TaskType";
 import {
-  MaintenanceTaskStatus,
+  TaskStatus,
   TASK_STATUS_PENDING
-} from "./MaintenanceTaskStatus";
+} from "./TaskStatus";
 
-export class MaintenanceTask {
-  private id: MaintenanceTaskId;
+export class Task {
+  private id: TaskId;
   private date: Date;
-  private type: MaintenanceTaskType;
+  private type: TaskType;
   private plant: Plant;
-  private status: MaintenanceTaskStatus;
+  private status: TaskStatus;
 
   constructor(
-    id: MaintenanceTaskId,
+    id: TaskId,
     date: Date,
-    type: MaintenanceTaskType,
+    type: TaskType,
     plant: Plant,
-    status?: MaintenanceTaskStatus
+    status?: TaskStatus
   ) {
     this.id = id;
     this.date = date;
     this.type = type;
     this.plant = plant;
-    this.status = status || new MaintenanceTaskStatus(TASK_STATUS_PENDING)
+    this.status = status || new TaskStatus(TASK_STATUS_PENDING)
   }
 
-  public getId(): MaintenanceTaskId {
+  public getId(): TaskId {
     return this.id;
   }
 
@@ -35,7 +35,7 @@ export class MaintenanceTask {
     return this.date;
   }
 
-  public getType(): MaintenanceTaskType {
+  public getType(): TaskType {
     return this.type;
   }
 
@@ -43,7 +43,7 @@ export class MaintenanceTask {
     return this.plant;
   }
 
-  public getStatus(): MaintenanceTaskStatus {
+  public getStatus(): TaskStatus {
     return this.status;
   }
 
@@ -64,12 +64,12 @@ export class MaintenanceTask {
     plant: any,
     status: string,
   }) {
-    return new MaintenanceTask(
-      new MaintenanceTaskId(data.id),
+    return new Task(
+      new TaskId(data.id),
       new Date(data.date),
-      new MaintenanceTaskType(data.type),
+      new TaskType(data.type),
       Plant.fromPrimitives(data.plant),
-      new MaintenanceTaskStatus(data.status),
+      new TaskStatus(data.status),
     )
   }
 }

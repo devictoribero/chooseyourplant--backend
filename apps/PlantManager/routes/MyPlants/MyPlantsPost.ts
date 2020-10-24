@@ -2,17 +2,17 @@ import { Router, Request, Response } from "express";
 import { MongoPlantRepository } from "../../../../src/PlantManager/Plants/Infrastructure/MongoPlantRepository";
 import { PlantCreator } from "../../../../src/PlantManager/Plants/Application/Create/PlantCreator";
 import { MyPlantsPostController } from "../../controllers/MyPlants/MyPlantsPostController";
-import { MongoMaintenanceTaskRepository } from "../../../../src/PlantManager/Maintenance/Infrastructure/MongoMaintenanceTaskRepository";
-import { MaintenanceTaskCreator } from "../../../../src/PlantManager/Maintenance/Application/Create/MaintenanceTaskCreator";
+import { MongoTaskRepository } from "../../../../src/PlantManager/Maintenance/Infrastructure/MongoTaskRepository";
+import { TaskCreator } from "../../../../src/PlantManager/Maintenance/Application/Create/TaskCreator";
 
 const router = Router();
 
 // Dependencies for creating a maintenance task
-const maintenanceTaskRepository = new MongoMaintenanceTaskRepository();
+const taskRepository = new MongoTaskRepository();
 
 // Dependencies for creating a maintenance plant
 const mongoPlantRepository = new MongoPlantRepository();
-const plantCreator = new PlantCreator(mongoPlantRepository, maintenanceTaskRepository);
+const plantCreator = new PlantCreator(mongoPlantRepository, taskRepository);
 const myPlantPostController = new MyPlantsPostController(plantCreator);
 
 router.post("/my-plants", (req: Request, res: Response) =>

@@ -1,3 +1,3 @@
 import { Uuid } from "../../../Shared/Domain/ValueObject/Uuid";
 
-export class MaintenanceTaskId extends Uuid {}
+export class TaskId extends Uuid {}

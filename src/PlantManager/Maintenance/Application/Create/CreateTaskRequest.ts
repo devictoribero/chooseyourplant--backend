@@ -1,4 +1,4 @@
-export type CreateMaintenanceTaskRequest = {
+export type CreateTaskRequest = {
   id: string;
   date: Date;
   type: string;

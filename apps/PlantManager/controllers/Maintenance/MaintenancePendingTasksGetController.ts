@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { MaintenanceTasksSearcher } from "../../../../src/PlantManager/Maintenance/Application/Search/MaintenanceTasksSearcher";
+import { TasksSearcher } from "../../../../src/PlantManager/Maintenance/Application/Search/TasksSearcher";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 import dayjs from 'dayjs'
 
 export class MaintenancePendingTasksGetController implements Controller {
-  maintenanceTasksSearcher: MaintenanceTasksSearcher;
+  taskSearcher: TasksSearcher;
 
-  constructor(maintenanceTasksSearcher: MaintenanceTasksSearcher) {
-    this.maintenanceTasksSearcher = maintenanceTasksSearcher;
+  constructor(taskSearcher: TasksSearcher) {
+    this.taskSearcher = taskSearcher;
   }
 
   async run(req: Request, res: Response) {
@@ -24,7 +24,7 @@ export class MaintenancePendingTasksGetController implements Controller {
 
     
 
-    this.maintenanceTasksSearcher
+    this.taskSearcher
       .run({from: todayISO, to: tomorrowISO})
       .then(plantsToWaterToday => {
         res.status(httpStatus.OK).send(plantsToWaterToday)
