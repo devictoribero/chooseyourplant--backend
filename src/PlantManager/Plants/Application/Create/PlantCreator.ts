@@ -5,10 +5,10 @@ import { Plant } from "../../Domain/Plant";
 import {
   TASKS_TYPES,
   TASKS_STATUS
-} from "../../../Maintenance/Application/Create/TaskCreator";
+} from "../../../Tasks/Application/Create/TaskCreator";
 import { Uuid } from '../../../../Shared/Domain/ValueObject/Uuid'
-import { TaskRepository } from '../../../Maintenance/Domain/TaskRepository';
-import { Task } from '../../../Maintenance/Domain/Task';
+import { TaskRepository } from '../../../Tasks/Domain/TaskRepository';
+import { Task } from '../../../Tasks/Domain/Task';
 
 export class PlantCreator {
   private repository;

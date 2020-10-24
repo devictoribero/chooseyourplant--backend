@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TasksSearcher } from "../../../../src/PlantManager/Maintenance/Application/Search/TasksSearcher";
+import { TasksSearcher } from "../../../../src/PlantManager/Tasks/Application/Search/TasksSearcher";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 import dayjs from 'dayjs'

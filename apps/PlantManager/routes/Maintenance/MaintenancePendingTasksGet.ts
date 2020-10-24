@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import { TasksSearcher } from "../../../../src/PlantManager/Maintenance/Application/Search/TasksSearcher";
-import { MongoTaskRepository } from "../../../../src/PlantManager/Maintenance/Infrastructure/MongoTaskRepository";
+import { TasksSearcher } from "../../../../src/PlantManager/Tasks/Application/Search/TasksSearcher";
+import { MongoTaskRepository } from "../../../../src/PlantManager/Tasks/Infrastructure/MongoTaskRepository";
 import { MaintenancePendingTasksGetController } from "../../controllers/Maintenance/MaintenancePendingTasksGetController";
 
 const router = Router();

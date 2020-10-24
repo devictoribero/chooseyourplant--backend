@@ -2,8 +2,8 @@ import { Router, Request, Response } from "express";
 import { MongoPlantRepository } from "../../../../src/PlantManager/Plants/Infrastructure/MongoPlantRepository";
 import { PlantCreator } from "../../../../src/PlantManager/Plants/Application/Create/PlantCreator";
 import { MyPlantsPostController } from "../../controllers/MyPlants/MyPlantsPostController";
-import { MongoTaskRepository } from "../../../../src/PlantManager/Maintenance/Infrastructure/MongoTaskRepository";
-import { TaskCreator } from "../../../../src/PlantManager/Maintenance/Application/Create/TaskCreator";
+import { MongoTaskRepository } from "../../../../src/PlantManager/Tasks/Infrastructure/MongoTaskRepository";
+import { TaskCreator } from "../../../../src/PlantManager/Tasks/Application/Create/TaskCreator";
 
 const router = Router();
 
