@@ -5,7 +5,7 @@ import httpStatus from "http-status";
 
 const MAX_NUMBER_PLANTS = 30;
 
-export class MyPlantsGetController implements Controller {
+export class PlantsGetController implements Controller {
   plantsSearcher: PlantsSearcher;
 
   constructor(plantsSearcher: PlantsSearcher) {

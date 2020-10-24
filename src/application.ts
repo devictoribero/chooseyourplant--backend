@@ -1,10 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
-import MyPlantsGetRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGet";
-import MyPlantsGetByIdRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsGetById";
-import MyPlantsPostRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsPost";
-import MyPlantsDeleteRoute from "../apps/PlantManager/routes/MyPlants/MyPlantsDelete";
-import MaintenancePendingTasksGet from "../apps/PlantManager/routes/Maintenance/MaintenancePendingTasksGet";
+import PlantsGetRoute from "../apps/PlantManager/routes/Plants/PlantsGet";
+import PlantsGetByIdRoute from "../apps/PlantManager/routes/Plants/PlantsGetById";
+import PlantsPostRoute from "../apps/PlantManager/routes/Plants/PlantsPost";
+import PlantsDeleteRoute from "../apps/PlantManager/routes/Plants/PlantsDelete";
+import MaintenancePendingTasksGet from "../apps/PlantManager/routes/Tasks/PendingTasksGet";
 
 export class Application {
   app: express.Application;
@@ -25,10 +25,10 @@ export class Application {
   }
 
   initRoutes() {
-    this.app.use(MyPlantsGetRoute);
-    this.app.use(MyPlantsGetByIdRoute);
-    this.app.use(MyPlantsPostRoute);
-    this.app.use(MyPlantsDeleteRoute);
+    this.app.use(PlantsGetRoute);
+    this.app.use(PlantsGetByIdRoute);
+    this.app.use(PlantsPostRoute);
+    this.app.use(PlantsDeleteRoute);
     this.app.use(MaintenancePendingTasksGet);
   }
 

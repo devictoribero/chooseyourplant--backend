@@ -3,7 +3,7 @@ import { PlantCreator } from "../../../../src/PlantManager/Plants/Application/Cr
 import httpStatus from "http-status";
 import { Controller } from "../Controller";
 
-export class MyPlantsPostController implements Controller {
+export class PlantsPostController implements Controller {
   plantCreator: PlantCreator;
 
   constructor(plantCreator: PlantCreator) {

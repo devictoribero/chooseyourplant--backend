@@ -4,7 +4,7 @@ import { Controller } from "../Controller";
 import httpStatus from "http-status";
 import dayjs from 'dayjs'
 
-export class MaintenancePendingTasksGetController implements Controller {
+export class PendingTasksGetController implements Controller {
   taskSearcher: TasksSearcher;
 
   constructor(taskSearcher: TasksSearcher) {

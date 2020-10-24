@@ -3,7 +3,7 @@ import { PlantFinder } from "../../../../src/PlantManager/Plants/Application/Fin
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
-export class MyPlantsGetByIdController implements Controller {
+export class PlantsGetByIdController implements Controller {
   plantFinderById: PlantFinder;
 
   constructor(plantFinderById: PlantFinder) {

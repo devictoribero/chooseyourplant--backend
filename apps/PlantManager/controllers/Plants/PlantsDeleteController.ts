@@ -3,7 +3,7 @@ import { PlantEraser } from "../../../../src/PlantManager/Plants/Application/Del
 import httpStatus from "http-status";
 import { Controller } from "../Controller";
 
-export class MyPlantsDeleteController implements Controller {
+export class PlantsDeleteController implements Controller {
   plantEraser: PlantEraser;
 
   constructor(plantEraser: PlantEraser) {
