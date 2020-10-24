@@ -1,30 +1,27 @@
 import { Plant } from "../../Plants/Domain/Plant";
 import { TaskId } from "./TaskId";
 import { TaskType } from "./TaskType";
-import {
-  TaskStatus,
-  TASK_STATUS_PENDING
-} from "./TaskStatus";
+import { TaskStatus } from "./TaskStatus";
 
 export class Task {
   private id: TaskId;
   private date: Date;
   private type: TaskType;
-  private plant: Plant;
   private status: TaskStatus;
+  private plant: Plant;
 
   constructor(
     id: TaskId,
     date: Date,
     type: TaskType,
+    status: TaskStatus,
     plant: Plant,
-    status?: TaskStatus
   ) {
     this.id = id;
     this.date = date;
     this.type = type;
+    this.status = status
     this.plant = plant;
-    this.status = status || new TaskStatus(TASK_STATUS_PENDING)
   }
 
   public getId(): TaskId {
@@ -49,11 +46,11 @@ export class Task {
 
   public toPrimitives() {
     return {
-      id: this.getId(),
+      id: this.getId().toString(),
       date: this.getDate().toISOString(),
-      type: this.getType(),
+      type: this.getType().toString(),
+      status: this.getStatus().toString(),
       plant: this.getPlant().toPrimitives(),
-      status: this.getStatus(),
     }
   }
 
@@ -68,8 +65,8 @@ export class Task {
       new TaskId(data.id),
       new Date(data.date),
       new TaskType(data.type),
-      Plant.fromPrimitives(data.plant),
       new TaskStatus(data.status),
+      Plant.fromPrimitives(data.plant),
     )
   }
 }

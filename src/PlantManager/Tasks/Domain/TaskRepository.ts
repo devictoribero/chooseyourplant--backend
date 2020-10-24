@@ -1,13 +1,9 @@
 import { Task } from "./Task";
 import { Nullable } from "../../../Shared/Domain/Nullable";
-import { TimeInterval } from "../../../Shared/Domain/TimeInterval";
+import { TaskCriteria } from "./TaskCriteria";
 
 export interface TaskRepository {
-  search(
-    interval: TimeInterval,
-    status?: String,
-    type?: String
-  ): Promise<Nullable<Array<Task>>>;
+  search(criteria: TaskCriteria): Promise<Nullable<Array<Task>>>;
 
   save(task: Task, transaction?: any): Promise<void>;
 }

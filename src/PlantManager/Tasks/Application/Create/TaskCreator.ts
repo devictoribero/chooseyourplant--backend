@@ -37,8 +37,8 @@ export class TaskCreator {
         new TaskId(request.id),
         request.date,
         new TaskType(request.type),
+        new TaskStatus(request.status),
         Plant.fromPrimitives(request.plant),
-        new TaskStatus(request.status)
       )
     );
   }

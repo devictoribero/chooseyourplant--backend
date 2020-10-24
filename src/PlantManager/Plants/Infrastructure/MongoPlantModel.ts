@@ -20,7 +20,7 @@ export const plantSchema = new Schema({
         type: {
           frequencyInDays: {type: Number, required: true},
           lastFertilizationDate: {type: Date, default: null},
-          nextFertilizationDate: {type:Date, default: null}
+          nextFertilizationDate: {type: Date, default: null}
         },
         required: false,
         default: null

@@ -33,7 +33,7 @@ describe("Plant Domain Model ----", () => {
           )
       );
   
-      expect(plant.getId()).toEqual(id);
+      expect(plant.getId().toString()).toEqual(id);
       expect(plant.getNickname()).toEqual("My Princess");
   
       // We store it in a variable to keep using it and save lines of code

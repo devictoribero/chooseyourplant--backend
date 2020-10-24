@@ -12,12 +12,14 @@ export class MongoPlantRepository implements PlantRepository {
   async save(plant: Plant, transaction: any): Promise<void> {
     await MongoPlantModel
       .init()
-      .then(() => 
-        MongoPlantModel.create([plant.toPrimitives()], {session: transaction}))
+      .then(() => MongoPlantModel.create(
+        [plant.toPrimitives()],
+        {session: transaction}
+      ))
       .catch((error) => {
-        console.log(error)
+        console.error(error)
         if (error.code === MONGODB_ID_ALREADY_EXISTING_ERROR_CODE) {
-          throw new PlantAlreadyExists(plant.getId());
+          throw new PlantAlreadyExists(plant.getId().toString());
         }
         throw new GeneralError("Tried to create a plant");
       });
@@ -42,7 +44,7 @@ export class MongoPlantRepository implements PlantRepository {
         : null
       )
       .catch(err => { 
-        console.log(err)
+        console.error(err)
         throw new Error(err)
        })
   }

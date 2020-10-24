@@ -4,14 +4,16 @@ import { Controller } from "../Controller";
 import httpStatus from "http-status";
 import dayjs from 'dayjs'
 
-export class PendingTasksGetController implements Controller {
-  taskSearcher: TasksSearcher;
+export class TasksGetController implements Controller {
+  tasksSearcher: TasksSearcher;
 
-  constructor(taskSearcher: TasksSearcher) {
-    this.taskSearcher = taskSearcher;
+  constructor(tasksSearcher: TasksSearcher) {
+    this.tasksSearcher = tasksSearcher;
   }
 
   async run(req: Request, res: Response) {
+    const status: string = req.params.status?.toUpperCase()
+    
     // We calculate the date of today
     const todayDDMMYYY = dayjs(new Date()).format('DD/MM/YYYY');
     const todayISO = new Date(todayDDMMYYY)
@@ -22,12 +24,12 @@ export class PendingTasksGetController implements Controller {
     // const todayPlusTwoDDMMYYY = dayjs(new Date()).add(2, "day").format('DD/MM/YYYY');
     // const todayPlusTwoISO = new Date(todayPlusTwoDDMMYYY)
 
-    
-
-    this.taskSearcher
-      .run({from: todayISO, to: tomorrowISO})
-      .then(plantsToWaterToday => {
-        res.status(httpStatus.OK).send(plantsToWaterToday)
+    await this.tasksSearcher
+      .run({from: undefined, to: undefined, status: status, type: undefined})
+      .then(tasks => {
+        tasks 
+          ? res.status(httpStatus.OK).send(tasks)
+          : res.status(httpStatus.NOT_FOUND).send()
       })
       .catch((error: any) =>
         res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error)

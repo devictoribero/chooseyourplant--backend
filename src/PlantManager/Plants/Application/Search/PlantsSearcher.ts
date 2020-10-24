@@ -1,6 +1,5 @@
 import { PlantRepository } from "../../Domain/PlantRepository";
 import { SearchPlantsRequest } from "./SearchPlantsRequest";
-import { Plant } from "../../Domain/Plant";
 import { Criteria } from "../../../../Shared/Domain/Criteria/Criteria";
 import { Nullable } from "../../../../Shared/Domain/Nullable";
 

@@ -14,13 +14,17 @@ export class PlantWateringMaintenance {
     this.lastWateringDate = lastWateringDate;
     
     if (lastWateringDate) {
-      this.lastWateringDate = lastWateringDate;
-      this.nextWateringDate = nextWateringDate ||
-        this.incrementDays(lastWateringDate, frequencyInDays);
+      this.lastWateringDate = this.convertDateToMidnight(lastWateringDate);
+      this.nextWateringDate = this.convertDateToMidnight(
+        nextWateringDate ||
+        this.incrementDays(lastWateringDate, frequencyInDays)
+      )
     } else {
       this.lastWateringDate = null;
-      this.nextWateringDate =  nextWateringDate ||
-        this.incrementDays(new Date(), frequencyInDays);
+      this.nextWateringDate =  this.convertDateToMidnight(
+        nextWateringDate ||
+        this.incrementDays(new Date(), frequencyInDays)
+      )
     }
   }
 
@@ -37,7 +41,12 @@ export class PlantWateringMaintenance {
   }
 
   private incrementDays(date: Date, days: number): Date {
-    const dateIncremented = dayjs(date).add(days, "day").format();
+    const dateMidNight = this.convertDateToMidnight(date)
+    const dateIncremented = dayjs(dateMidNight).add(days, "day").format();
     return new Date(dateIncremented);
+  }
+
+  private convertDateToMidnight(date: Date): Date {
+    return new Date(date.setHours(0,0,0,0))
   }
 }

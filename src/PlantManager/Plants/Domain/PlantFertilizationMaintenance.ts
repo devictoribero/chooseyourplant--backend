@@ -6,12 +6,6 @@ enum FERTILIZATION_FREQUENCY {
   MONTHLY = 28,
 }
 
-export type FertilizationMaintenanceType = {
-  frequencyInDays: FERTILIZATION_FREQUENCY;
-  nextFertilizationDate: Date;
-  lastFertilizationDate?: Date;
-};
-
 export class PlantFertilizationMaintenance {
   private frequencyInDays: FERTILIZATION_FREQUENCY;
   private lastFertilizationDate: Date | null;
@@ -25,13 +19,17 @@ export class PlantFertilizationMaintenance {
     this.frequencyInDays = frequencyInDays;
 
     if (lastFertilizationDate) {
-      this.lastFertilizationDate = lastFertilizationDate;
-      this.nextFertilizationDate = nextFertilizationDate ||
-        this.incrementDays(lastFertilizationDate, frequencyInDays);
+      this.lastFertilizationDate = this.convertDateToMidnight(lastFertilizationDate);
+      this.nextFertilizationDate = this.convertDateToMidnight(
+        nextFertilizationDate ||
+        this.incrementDays(lastFertilizationDate, frequencyInDays)
+      )
     } else {
       this.lastFertilizationDate = null;
-      this.nextFertilizationDate = nextFertilizationDate ||
+      this.nextFertilizationDate = this.convertDateToMidnight(
+        nextFertilizationDate ||
         this.incrementDays(new Date(), frequencyInDays)
+      )
     }
   }
 
@@ -48,8 +46,12 @@ export class PlantFertilizationMaintenance {
   }
 
   private incrementDays(date: Date, days: number): Date {
-    const dateIncremented = dayjs(date).add(days, "day").format();
+    const dateMidNight = this.convertDateToMidnight(date)
+    const dateIncremented = dayjs(dateMidNight).add(days, "day").format();
     return new Date(dateIncremented);
   }
   
+  private convertDateToMidnight(date: Date): Date {
+    return new Date(date.setHours(0,0,0,0))
+  }
 }

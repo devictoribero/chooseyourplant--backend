@@ -5,7 +5,7 @@ import { Schema, model } from "mongoose";
 // So I created another field called `id`.
 export const taskSchema = new Schema({
   id: {type: String, required: true, unique: true},
-  date: {type: String, required: true},
+  date: {type: Date, required: true},
   type: {type: String, required: true},
   plant: {type: Object, required: true },
   status: {type: String, required: true },

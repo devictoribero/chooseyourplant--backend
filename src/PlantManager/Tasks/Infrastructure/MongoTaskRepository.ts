@@ -4,8 +4,7 @@ import { TaskAlreadyExists } from "../Domain/TaskAlreadyExists";
 import MongoTaskModel from './MongoTaskModel'
 import { Nullable } from "../../../Shared/Domain/Nullable";
 import { GeneralError } from "../../../Shared/Domain/GeneralError";
-import { TimeInterval } from "../../../Shared/Domain/TimeInterval";
-import { Document } from "mongoose";
+import { TaskCriteria } from "../Domain/TaskCriteria";
 
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
 
@@ -32,21 +31,18 @@ export class MongoTaskRepository implements TaskRepository {
       .catch(err => { throw new Error(err) })
   }
 
-  async search(
-    interval: TimeInterval,
-    status?: String,
-    type?: String
-  ): Promise<Nullable<Array<Task>>> {
+  async search(criteria: TaskCriteria): Promise<Nullable<Array<Task>>> {
     return MongoTaskModel
       .init()
       .then(() => 
         MongoTaskModel
           .find()
-          .where('interval').equals(interval)
-          .where('status').equals(status)
-          .where('type').equals(type)
+          .lean()
+          .where('status').equals('PENDING')
+          // .where('interval').equals(interval)
+          // .where('type').equals(type)
       )
-      .then((docs: Document[]) => docs
+      .then((docs: any[]) => docs
         ? docs.map((doc: any) => Task.fromPrimitives({...doc}))
         : null
       )

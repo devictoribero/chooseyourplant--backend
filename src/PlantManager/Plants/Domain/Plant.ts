@@ -22,12 +22,12 @@ export class Plant {
     this.imageUrl = imageUrl || null;
   }
 
-  public getId(): string {
-    return this.id.toString()
+  public getId(): PlantId {
+    return this.id;
   }
 
-  public getNickname(): string {
-    return this.nickname.toString();
+  public getNickname(): PlantNickname {
+    return this.nickname;
   }
 
   public getMaintenance(): PlantMaintenance {
@@ -41,8 +41,8 @@ export class Plant {
 
   public toPrimitives() {
     return {
-      id: this.getId(),
-      nickname: this.getNickname(),
+      id: this.getId().toString(),
+      nickname: this.getNickname().toString(),
       maintenance: this.getMaintenance(),
       imageUrl: this.getImageUrl()
     }
