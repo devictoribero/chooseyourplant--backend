@@ -12,7 +12,7 @@ export class PlantFinder {
 
   async run(request: FindPlantRequest): Promise<Nullable<any>> {
     return this.repository
-      .find(new PlantId(request.id))
+      .findOne(new PlantId(request.id))
       .then(plant => plant?.toPrimitives())
   }
 }

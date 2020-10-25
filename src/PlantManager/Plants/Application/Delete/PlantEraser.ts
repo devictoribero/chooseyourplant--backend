@@ -33,7 +33,7 @@ export class PlantEraser {
     let createTasksQueue: any = []
     pendingTasks.map(task =>
       createTasksQueue.push(
-        this.taskRepository.remove(task.getId().toString())
+        this.taskRepository.remove(task.getId())
       )
     )
 

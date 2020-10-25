@@ -5,6 +5,7 @@ import MongoTaskModel from './MongoTaskModel'
 import { Nullable } from "../../../Shared/Domain/Nullable";
 import { GeneralError } from "../../../Shared/Domain/GeneralError";
 import { TaskCriteria } from "../Domain/TaskCriteria";
+import { TaskId } from "../Domain/TaskId";
 
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
 
@@ -13,7 +14,10 @@ export class MongoTaskRepository implements TaskRepository {
     await MongoTaskModel
       .init()
       .then(() => 
-        MongoTaskModel.create([task.toPrimitives()], {session: transaction})
+        MongoTaskModel.updateOne(
+          {id: task.getId().toString()},
+          task.toPrimitives(),
+          {session: transaction, upsert: true})
       )
       .catch((error) => {
         if (error.code === MONGODB_ID_ALREADY_EXISTING_ERROR_CODE) {
@@ -23,7 +27,7 @@ export class MongoTaskRepository implements TaskRepository {
       });
   }
 
-  async find(id: string): Promise<Nullable<Task>> {
+  async find(id: TaskId): Promise<Nullable<Task>> {
     return MongoTaskModel
       .init()
       .then(() => MongoTaskModel.findOne({ id }).lean())
@@ -64,7 +68,7 @@ export class MongoTaskRepository implements TaskRepository {
       .catch(err => { throw new Error(err) })
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: TaskId): Promise<void> {
     return MongoTaskModel
       .init()
       .then(async() => { await MongoTaskModel.findOneAndRemove({id}) })

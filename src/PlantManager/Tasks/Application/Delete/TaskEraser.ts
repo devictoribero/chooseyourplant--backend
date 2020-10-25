@@ -1,3 +1,4 @@
+import { TaskId } from "../../Domain/TaskId";
 import { TaskRepository } from "../../Domain/TaskRepository";
 import { TaskEraserRequest } from "./TaskEraserRequest";
 
@@ -9,6 +10,6 @@ export class TaskEraser {
   }
 
   async run(request: TaskEraserRequest): Promise<void> {
-    return this.repository.remove(request.id);
+    return this.repository.remove(new TaskId(request.id));
   }
 }

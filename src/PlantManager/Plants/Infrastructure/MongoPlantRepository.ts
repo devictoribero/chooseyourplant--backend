@@ -13,9 +13,10 @@ export class MongoPlantRepository implements PlantRepository {
   async save(plant: Plant, transaction: any): Promise<void> {
     await MongoPlantModel
       .init()
-      .then(() => MongoPlantModel.create(
-        [plant.toPrimitives()],
-        {session: transaction}
+      .then(() => MongoPlantModel.updateOne(
+        {id: plant.getId().toString()},
+        plant.toPrimitives(),
+        {session: transaction, upsert: true}
       ))
       .catch((error) => {
         console.error(error)
@@ -27,7 +28,7 @@ export class MongoPlantRepository implements PlantRepository {
   }
 
 
-  async find(id: PlantId): Promise<Nullable<Plant>> {
+  async findOne(id: PlantId): Promise<Nullable<Plant>> {
     return MongoPlantModel
       .init()
       .then(() => MongoPlantModel.findOne({ id }).lean())

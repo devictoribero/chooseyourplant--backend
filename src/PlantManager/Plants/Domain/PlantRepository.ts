@@ -6,7 +6,7 @@ import { PlantId } from "./PlantId";
 export interface PlantRepository {
   save(plant: Plant, transaction: any): Promise<void>;
 
-  find(id: PlantId): Promise<Nullable<Plant>>;
+  findOne(id: PlantId): Promise<Nullable<Plant>>;
 
   search(criteria: Criteria): Promise<Nullable<Array<Plant>>>;
 
