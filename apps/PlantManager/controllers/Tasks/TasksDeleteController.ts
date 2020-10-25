@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
-import { TaskEraser } from "../../../../src/PlantManager/Tasks/Application/Delete/TaskEraser";
+import { DeleteTask } from "../../../../src/PlantManager/Tasks/Application/Delete/DeleteTask";
 import httpStatus from "http-status";
 import { Controller } from "../Controller";
 
 export class TasksDeleteController implements Controller {
-  taskEraser: TaskEraser;
+  deleteTask: DeleteTask;
 
-  constructor(taskEraser: TaskEraser) {
-    this.taskEraser = taskEraser;
+  constructor(deleteTask: DeleteTask) {
+    this.deleteTask = deleteTask;
   }
 
   async run(req: Request, res: Response) {
     const id: string = req.params.plantId;
 
-    await this.taskEraser
+    await this.deleteTask
       .run({id})
       .then(() => res.status(httpStatus.NO_CONTENT).send())
       .catch((error: any) => {

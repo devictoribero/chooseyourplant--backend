@@ -1,16 +1,17 @@
 import { PlantRepository } from "../../Domain/PlantRepository";
-import { FindPlantRequest } from "./FindPlantRequest";
 import { Nullable } from "../../../../Shared/Domain/Nullable";
 import { PlantId } from "../../Domain/PlantId";
 
-export class PlantFinder {
+export class FindPlant {
   private repository;
 
   constructor(repository: PlantRepository) {
     this.repository = repository;
   }
 
-  async run(request: FindPlantRequest): Promise<Nullable<any>> {
+  async run(request: {
+    id: string;
+  }): Promise<Nullable<any>> {
     return this.repository
       .findOne(new PlantId(request.id))
       .then(plant => plant?.toPrimitives())

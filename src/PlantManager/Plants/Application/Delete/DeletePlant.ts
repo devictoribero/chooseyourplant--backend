@@ -1,11 +1,10 @@
 import { PlantRepository } from "../../Domain/PlantRepository";
-import { PlantEraserRequest } from "./PlantEraserRequest";
 import { TaskRepository } from "../../../Tasks/Domain/TaskRepository";
 import { TaskCriteria } from "../../../Tasks/Domain/TaskCriteria";
 import { PlantId } from "../../Domain/PlantId";
 import mongoose from 'mongoose'
 
-export class PlantEraser {
+export class DeletePlant {
   private repository;
   private taskRepository;
 
@@ -14,7 +13,9 @@ export class PlantEraser {
     this.taskRepository = taskRepository;
   }
 
-  async run(request: PlantEraserRequest): Promise<void> {
+  async run(request: {
+    id: string;
+  }): Promise<void> {
     // init transaction
     const transaction = await mongoose.startSession()
     transaction.startTransaction()

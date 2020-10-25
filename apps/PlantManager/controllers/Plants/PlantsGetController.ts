@@ -1,22 +1,22 @@
 import { Request, Response } from "express";
-import { PlantsSearcher } from "../../../../src/PlantManager/Plants/Application/Search/PlantsSearcher";
+import { SearchPlants } from "../../../../src/PlantManager/Plants/Application/Search/SearchPlants";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
 const MAX_NUMBER_PLANTS = 30;
 
 export class PlantsGetController implements Controller {
-  plantsSearcher: PlantsSearcher;
+  searchPlants: SearchPlants;
 
-  constructor(plantsSearcher: PlantsSearcher) {
-    this.plantsSearcher = plantsSearcher;
+  constructor(searchPlants: SearchPlants) {
+    this.searchPlants = searchPlants;
   }
 
   async run(req: Request, res: Response) {
     const { query } = req;
     const limit: number = query.limit ? +query.limit : MAX_NUMBER_PLANTS;
 
-    await this.plantsSearcher
+    await this.searchPlants
       .run({ limit })
       .then((plants) => res.status(httpStatus.OK).send(plants))
       .catch((error: any) =>

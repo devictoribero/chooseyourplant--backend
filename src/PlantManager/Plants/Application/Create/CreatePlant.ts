@@ -1,16 +1,15 @@
 import mongoose from 'mongoose'
 import { PlantRepository } from "../../Domain/PlantRepository";
-import { CreatePlantRequest } from "./CreatePlantRequest";
 import { Plant } from "../../Domain/Plant";
 import {
   TASKS_TYPES,
   TASKS_STATUS
-} from "../../../Tasks/Application/Create/TaskCreator";
+} from "../../../Tasks/Application/Create/CreateTask";
 import { Uuid } from '../../../../Shared/Domain/ValueObject/Uuid'
 import { TaskRepository } from '../../../Tasks/Domain/TaskRepository';
 import { Task } from '../../../Tasks/Domain/Task';
 
-export class PlantCreator {
+export class CreatePlant {
   private repository;
   private taskRepository;
 
@@ -19,7 +18,23 @@ export class PlantCreator {
     this.taskRepository = taskRepository;
   }
 
-  async run(request: CreatePlantRequest): Promise<void> {
+  async run(request: {
+    id: string;
+    nickname: string;
+    maintenance: {
+      watering: {
+        frequencyInDays: number;
+        nextWateringDate?: Date| null;
+        lastWateringDate?: Date | null;
+      };
+      fertilization?: {
+        frequencyInDays: number;
+        nextFertilizationDate?: Date| null;
+        lastFertilizationDate?: Date | null;
+      } | null;
+    };
+    imageUrl?: string | null;
+  }): Promise<void> {
     // init transaction
     const transaction = await mongoose.startSession()
     transaction.startTransaction()

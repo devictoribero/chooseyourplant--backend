@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
-import { PlantFinder } from "../../../../src/PlantManager/Plants/Application/Find/PlantFinder";
+import { FindPlant } from "../../../../src/PlantManager/Plants/Application/Find/FindPlant";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
 export class PlantsGetByIdController implements Controller {
-  plantFinderById: PlantFinder;
+  findPlantById: FindPlant;
 
-  constructor(plantFinderById: PlantFinder) {
-    this.plantFinderById = plantFinderById;
+  constructor(findPlantById: FindPlant) {
+    this.findPlantById = findPlantById;
   }
 
   async run(req: Request, res: Response) {
     const id: string = req.params.plantId;
 
-    await this.plantFinderById
+    await this.findPlantById
       .run({ id })
       .then((plant) =>
         plant

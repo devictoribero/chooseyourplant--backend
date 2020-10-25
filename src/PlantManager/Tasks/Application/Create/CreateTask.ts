@@ -1,5 +1,4 @@
 import { TaskRepository } from "../../Domain/TaskRepository";
-import { CreateTaskRequest } from "./CreateTaskRequest";
 import { Task } from "../../Domain/Task"
 import { TaskId } from "../../Domain/TaskId"
 import {
@@ -24,14 +23,20 @@ export const TASKS_STATUS = {
   'COMPLETED': TASK_STATUS_COMPLETED,
 }
 
-export class TaskCreator {
+export class CreateTask {
   private repository;
 
   constructor(repository: TaskRepository) {
     this.repository = repository;
   }
 
-  async run(request: CreateTaskRequest): Promise<void> {
+  async run(request: {
+    id: string;
+    date: Date;
+    type: string;
+    plant: any;
+    status: string;
+  }): Promise<void> {
     return this.repository.save(
       new Task(
         new TaskId(request.id),

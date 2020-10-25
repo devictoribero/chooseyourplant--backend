@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { PlantCreator } from "../../../../src/PlantManager/Plants/Application/Create/PlantCreator";
+import { CreatePlant } from "../../../../src/PlantManager/Plants/Application/Create/CreatePlant";
 import httpStatus from "http-status";
 import { Controller } from "../Controller";
 
 export class PlantsPostController implements Controller {
-  plantCreator: PlantCreator;
+  createPlant: CreatePlant;
 
-  constructor(plantCreator: PlantCreator) {
-    this.plantCreator = plantCreator;
+  constructor(createPlant: CreatePlant) {
+    this.createPlant = createPlant;
   }
 
   async run(req: Request, res: Response) {
-    await this.plantCreator
-      .run(this.mapControllerRequestToPlantCreatorRequest(req))
+    await this.createPlant
+      .run(this.mapControllerRequestToCreatePlantRequest(req))
       .then(() => res.status(httpStatus.CREATED).send()) 
       .catch((error: any) => {
         res.status(httpStatus.INTERNAL_SERVER_ERROR)
@@ -20,7 +20,7 @@ export class PlantsPostController implements Controller {
       });
   }
 
-  private mapControllerRequestToPlantCreatorRequest(req: Request) {
+  private mapControllerRequestToCreatePlantRequest(req: Request) {
     const watering: any = req.body.maintenance.watering;
     const fertilization: any = req.body.maintenance.fertilization;
     const fertilizationMaitenance: any | null = fertilization
