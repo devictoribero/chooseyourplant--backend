@@ -32,20 +32,36 @@ export class MongoTaskRepository implements TaskRepository {
   }
 
   async search(criteria: TaskCriteria): Promise<Nullable<Array<Task>>> {
+    const hasFilters = Boolean(
+      criteria.getFrom() ||
+      criteria.getTo() ||
+      criteria.getType()?.toString() ||
+      criteria.getStatus()?.toString()
+    )
+
+    const query = hasFilters
+      ? MongoTaskModel.find({
+        from: criteria.getFrom(),
+        to: criteria.getTo(),
+        type: criteria.getType()?.toString(),
+        status: criteria.getStatus()?.toString(),
+      })
+      : MongoTaskModel.find()
+
     return MongoTaskModel
       .init()
-      .then(() => 
-        MongoTaskModel
-          .find()
-          .lean()
-          .where('status').equals('PENDING')
-          // .where('interval').equals(interval)
-          // .where('type').equals(type)
-      )
+      .then(() => query.lean())
       .then((docs: any[]) => docs
         ? docs.map((doc: any) => Task.fromPrimitives({...doc}))
         : null
       )
+      .catch(err => { throw new Error(err) })
+  }
+
+  async remove(id: string): Promise<void> {
+    return MongoTaskModel
+      .init()
+      .then(async() => { await MongoTaskModel.findOneAndRemove({id}) })
       .catch(err => { throw new Error(err) })
   }
 }

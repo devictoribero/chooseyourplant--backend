@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { TasksSearcher } from "../../../../src/PlantManager/Tasks/Application/Search/TasksSearcher";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
-import dayjs from 'dayjs'
 
 export class TasksGetController implements Controller {
   tasksSearcher: TasksSearcher;
@@ -12,20 +11,17 @@ export class TasksGetController implements Controller {
   }
 
   async run(req: Request, res: Response) {
-    const status: string = req.params.status?.toUpperCase()
-    
-    // We calculate the date of today
-    const todayDDMMYYY = dayjs(new Date()).format('DD/MM/YYYY');
-    const todayISO = new Date(todayDDMMYYY)
-    // We calculate the date of today + 1
-    const tomorrowDDMMYYY = dayjs(new Date()).add(1, "day").format('DD/MM/YYYY');
-    const tomorrowISO = new Date(tomorrowDDMMYYY)
-    // We calculate the date of today + 2
-    // const todayPlusTwoDDMMYYY = dayjs(new Date()).add(2, "day").format('DD/MM/YYYY');
-    // const todayPlusTwoISO = new Date(todayPlusTwoDDMMYYY)
+    // @ts-ignore
+    const from: any = req.query.from ? new Date(req.query.from) : undefined
+    // @ts-ignore
+    const to: anny = req.query.to ? new Date(req.query.to) : undefined
+    // @ts-ignore
+    const type: string = req.query.type?.toUpperCase()
+    // @ts-ignore
+    const status: string = req.query.status?.toUpperCase()
 
     await this.tasksSearcher
-      .run({from: undefined, to: undefined, status: status, type: undefined})
+      .run({from, to, status, type})
       .then(tasks => {
         tasks 
           ? res.status(httpStatus.OK).send(tasks)

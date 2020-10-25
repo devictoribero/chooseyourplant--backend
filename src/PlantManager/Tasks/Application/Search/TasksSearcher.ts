@@ -15,20 +15,15 @@ export class TasksSearcher {
   }
 
   async run(request: SearchTasksRequest): Promise<Nullable<Array<any>>> {
-    // Calculate midnight dates because the interval it's easier to calculate
-    // const fromMidnightDate = this.getMidnightDate(request.from)
-    // const toMidnightDate = this.getMidnightDate(request.to)
+    const tasks = await this.repository.search(
+      new TaskCriteria(
+        request.from,
+        request.to,
+        request.type ? new TaskType(request.type) : undefined,
+        request.status ? new TaskStatus(request.status) : undefined
+      )
+    );
     
-    // const timeInterval = new TimeInterval(fromMidnightDate, toMidnightDate)
-
-    const criteria = new TaskCriteria(
-      request.from,
-      request.to,
-      request.type ? new TaskType(request.type) : undefined,
-      request.status ? new TaskStatus(request.status) : undefined
-    )
-    console.log(criteria)
-    const tasks = await this.repository.search(criteria);
     return tasks
       ? tasks.map((task: Task) => task.toPrimitives())
       : null
