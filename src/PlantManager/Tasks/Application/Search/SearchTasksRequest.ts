@@ -3,4 +3,5 @@ export type SearchTasksRequest = {
   to?: Date;
   type?: string,
   status?: string,
+  plantId?: string
 };

@@ -32,19 +32,25 @@ export class MongoTaskRepository implements TaskRepository {
   }
 
   async search(criteria: TaskCriteria): Promise<Nullable<Array<Task>>> {
-    const hasFilters = Boolean(
-      criteria.getFrom() ||
-      criteria.getTo() ||
-      criteria.getType()?.toString() ||
-      criteria.getStatus()?.toString()
-    )
+    const from: Date|undefined = criteria.getFrom()
+    const to: Date|undefined = criteria.getTo()
+    const type: string|undefined = criteria.getType()?.toString()
+    const status: string|undefined = criteria.getStatus()?.toString()
+    const plantId: string|undefined = criteria.getPlantId()?.toString()
+    const hasFilters = Boolean(from || to || type || status || plantId)
+
+    const hasFilterTasksFromDate = from && !to
+    const hasFilterTasksToDate = to && !from
+    const hasFilterTasksInPeriod = from && to
 
     const query = hasFilters
       ? MongoTaskModel.find({
-        from: criteria.getFrom(),
-        to: criteria.getTo(),
-        type: criteria.getType()?.toString(),
-        status: criteria.getStatus()?.toString(),
+        ...(hasFilterTasksFromDate && {date: {$gte: from}}),
+        ...(hasFilterTasksToDate && {date: {$lte: to}}),
+        ...(hasFilterTasksInPeriod && {date: {$gte: from, $lte: to}}),
+        ...(type && {type: type}),
+        ...(status && {status: status}),
+        ...(plantId && {'plant.id': plantId}),
       })
       : MongoTaskModel.find()
 

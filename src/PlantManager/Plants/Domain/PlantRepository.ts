@@ -9,5 +9,5 @@ export interface PlantRepository {
 
   search(criteria: Criteria): Promise<Nullable<Array<Plant>>>;
 
-  remove(id: string): Promise<void>;
+  remove(id: string, transaction: any): Promise<void>;
 }

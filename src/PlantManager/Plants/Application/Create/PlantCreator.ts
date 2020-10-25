@@ -14,10 +14,7 @@ export class PlantCreator {
   private repository;
   private taskRepository;
 
-  constructor(
-    repository: PlantRepository,
-    taskRepository: TaskRepository,
-  ) {
+  constructor(repository: PlantRepository, taskRepository: TaskRepository) {
     this.repository = repository;
     this.taskRepository = taskRepository;
   }

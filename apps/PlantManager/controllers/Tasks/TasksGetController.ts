@@ -19,9 +19,11 @@ export class TasksGetController implements Controller {
     const type: string = req.query.type?.toUpperCase()
     // @ts-ignore
     const status: string = req.query.status?.toUpperCase()
+    // @ts-ignore
+    const plantId: string = req.query.plantId
 
     await this.tasksSearcher
-      .run({from, to, status, type})
+      .run({from, to, status, type, plantId})
       .then(tasks => {
         tasks 
           ? res.status(httpStatus.OK).send(tasks)
