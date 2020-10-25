@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { TasksSearcher } from "../../../../src/PlantManager/Tasks/Application/Search/TasksSearcher";
+import { SearchTasks } from "../../../../src/PlantManager/Tasks/Application/Search/SearchTasks";
 import { Controller } from "../Controller";
 import httpStatus from "http-status";
 
 export class TasksGetController implements Controller {
-  tasksSearcher: TasksSearcher;
+  searchTasks: SearchTasks;
 
-  constructor(tasksSearcher: TasksSearcher) {
-    this.tasksSearcher = tasksSearcher;
+  constructor(searchTasks: SearchTasks) {
+    this.searchTasks = searchTasks;
   }
 
   async run(req: Request, res: Response) {
@@ -22,7 +22,7 @@ export class TasksGetController implements Controller {
     // @ts-ignore
     const plantId: string = req.query.plantId
 
-    await this.tasksSearcher
+    await this.searchTasks
       .run({from, to, status, type, plantId})
       .then(tasks => {
         tasks 
