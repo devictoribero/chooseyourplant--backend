@@ -5,8 +5,8 @@ import { PlantsGetController } from "../../controllers/Plants/PlantsGetControlle
 
 const router = Router();
 // Dependencies for creating a plant
-const mongoPlantRepository = new MongoPlantRepository();
-const plantsFinder = new PlantsSearcher(mongoPlantRepository);
+const plantRepository = new MongoPlantRepository();
+const plantsFinder = new PlantsSearcher(plantRepository);
 const plantsGetController = new PlantsGetController(plantsFinder);
 
 router.get("/my-plants", (req: Request, res: Response) =>

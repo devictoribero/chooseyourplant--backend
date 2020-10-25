@@ -2,6 +2,7 @@ import { PlantRepository } from "../../Domain/PlantRepository";
 import { PlantEraserRequest } from "./PlantEraserRequest";
 import { TaskRepository } from "../../../Tasks/Domain/TaskRepository";
 import { TaskCriteria } from "../../../Tasks/Domain/TaskCriteria";
+import { PlantId } from "../../Domain/PlantId";
 import mongoose from 'mongoose'
 
 export class PlantEraser {
@@ -19,7 +20,7 @@ export class PlantEraser {
     transaction.startTransaction()
 
     // Remove a plant
-    await this.repository.remove(request.id, transaction);
+    await this.repository.remove(new PlantId(request.id), transaction);
 
     const pendingTasks = await this.taskRepository.search(
       TaskCriteria.create({ plantId: request.id })
@@ -37,6 +38,5 @@ export class PlantEraser {
     )
 
     await Promise.all(createTasksQueue)
-
   }
 }

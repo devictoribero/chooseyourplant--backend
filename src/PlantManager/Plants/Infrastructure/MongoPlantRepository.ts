@@ -5,6 +5,7 @@ import { Nullable } from "../../../Shared/Domain/Nullable";
 import { PlantAlreadyExists } from "../Domain/PlantAlreadyExists";
 import { GeneralError } from "../../../Shared/Domain/GeneralError";
 import { Criteria } from "../../../Shared/Domain/Criteria/Criteria";
+import { PlantId } from "../Domain/PlantId";
 
 const MONGODB_ID_ALREADY_EXISTING_ERROR_CODE = 11000
 
@@ -26,7 +27,7 @@ export class MongoPlantRepository implements PlantRepository {
   }
 
 
-  async find(id: string): Promise<Nullable<Plant>> {
+  async find(id: PlantId): Promise<Nullable<Plant>> {
     return MongoPlantModel
       .init()
       .then(() => MongoPlantModel.findOne({ id }).lean())
@@ -49,7 +50,7 @@ export class MongoPlantRepository implements PlantRepository {
        })
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: PlantId): Promise<void> {
     return MongoPlantModel
       .init()
       .then(async() => { await MongoPlantModel.findOneAndRemove({id}) })
