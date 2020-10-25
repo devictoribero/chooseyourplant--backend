@@ -27,6 +27,14 @@ export class MongoTaskRepository implements TaskRepository {
       });
   }
 
+  async findOne(id: TaskId): Promise<Nullable<Task>> {
+    return MongoTaskModel
+      .init()
+      .then(() => MongoTaskModel.findOne({ id }).lean())
+      .then((doc: any) => doc ? Task.fromPrimitives({...doc, id}) : null)
+      .catch(err => { throw new Error(err) })
+  }
+
   async find(id: TaskId): Promise<Nullable<Task>> {
     return MongoTaskModel
       .init()

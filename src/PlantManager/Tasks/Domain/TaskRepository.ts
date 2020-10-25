@@ -6,6 +6,8 @@ import { TaskId } from "./TaskId";
 export interface TaskRepository {
   search(criteria: TaskCriteria): Promise<Nullable<Array<Task>>>;
 
+  findOne(id: TaskId): Promise<Nullable<Task>>;
+
   save(task: Task, transaction?: any): Promise<void>;
 
   remove(id: TaskId): Promise<void>;

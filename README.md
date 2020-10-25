@@ -1,0 +1,1 @@
+To run this project in local, you must run `run-rs -v 4.0.0 --shell` on a separate shell terminal.

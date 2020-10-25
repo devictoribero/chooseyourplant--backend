@@ -1,7 +1,7 @@
 import { Plant } from "../../Plants/Domain/Plant";
 import { TaskId } from "./TaskId";
 import { TaskType } from "./TaskType";
-import { TaskStatus } from "./TaskStatus";
+import { TaskStatus, TASK_STATUS_COMPLETED } from "./TaskStatus";
 
 export class Task {
   private id: TaskId;
@@ -52,6 +52,10 @@ export class Task {
       status: this.getStatus().toString(),
       plant: this.getPlant().toPrimitives(),
     }
+  }
+
+  public markAsCompleted(): void {
+    this.status = new TaskStatus(TASK_STATUS_COMPLETED)
   }
 
   static fromPrimitives(data: {

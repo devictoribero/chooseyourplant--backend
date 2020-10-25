@@ -6,6 +6,7 @@ import PlantsPostRoute from "../apps/PlantManager/routes/Plants/PlantsPost";
 import PlantsDeleteRoute from "../apps/PlantManager/routes/Plants/PlantsDelete";
 import TasksGet from "../apps/PlantManager/routes/Tasks/TasksGet";
 import TasksDeleteRoute from "../apps/PlantManager/routes/Tasks/TasksDelete";
+import CompleteTaskPost from "../apps/PlantManager/routes/Tasks/CompleteTaskPost";
 
 export class Application {
   app: express.Application;
@@ -34,6 +35,7 @@ export class Application {
     // Tasks
     this.app.use(TasksGet);
     this.app.use(TasksDeleteRoute);
+    this.app.use(CompleteTaskPost);
   }
 
   start() {
