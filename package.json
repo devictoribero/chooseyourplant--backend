@@ -9,7 +9,7 @@
     "test": "jest --watch"
   },
   "keywords": [],
-  "author": "Aman Mittal (https://amanhimself.dev)",
+  "author": "Victor Ribero",
   "license": "MIT",
   "dependencies": {
     "@types/mongoose": "^5.7.36",
